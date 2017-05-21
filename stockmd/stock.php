@@ -7,6 +7,18 @@
   header("Location: index.php");
   exit;
  }
+
+ ?>
+
+ <?php
+$username="root";
+$password="pass123";
+$database="stock";
+$conn = mysqli_connect("localhost", $username, $password, $database);
+
+$query = "SELECT pno,pname,category,price FROM stocktb";
+$row_stockdb = $conn->query($query);
+
 ?>
 <!DOCTYPE html>
 <!--
@@ -57,6 +69,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <style type="text/css">
+  .flyover {
+  margin-top:-1000px;
+   overflow: hidden;
+   position: fixed;
+   width: 50%;
+   opacity: 0.9;
+   z-index: 1050;
+   transition: all 1s ease;
+}
+ 
+.flyover.in {
+  margin-top: 150px;
+
+}
+</style>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -147,7 +175,7 @@ desired effect
       <ul class="sidebar-menu">
         <li class="header">MENU</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="#"><i class="fa fa-cart-plus"></i> <span>Cart</span></a></li>
+        <li><a href="../"><i class="fa fa-cart-plus"></i> <span>Cart</span></a></li>
         <li><a href="#"><i class="fa fa-database"></i> <span>Database</span></a></li>
         <li><a href="#"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
 
@@ -180,33 +208,34 @@ desired effect
             <div class="box-header">
               <h3 class="box-title">Database</h3>
             </div>
+
+            
             <!-- /.box-header -->
             <div class="box-body">
               <table id="db-tb" class="table table-bordered table-hover" data-page-length='25'>
                 <thead>
                 <tr>
-                  <th>No.</th>
                   <th>Product No.</th>
-                  <th>Product Name</th>
                   <th>Category</th>
+                  <th>Product Name</th>
                   <th>Price (₹)</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>1578</td>
-                  <td>Micromax A78</td>
-                  <td>Mobile Phone</td>
-                  <td>5523</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>1764</td>
-                  <td>Apple Headset 789</td>
-                  <td>Headset</td>
-                  <td>230</td>
-                </tr>
+                <?php
+                  if(!empty($row_stockdb)){
+                    while( $f_stock = mysqli_fetch_assoc($row_stockdb)){
+                    $pno=$f_stock["pno"];
+                    $pname=$f_stock["pname"];
+                    $category=$f_stock["category"];
+                    $price=$f_stock["price"];
+                    echo "<tr>
+                            <td>".$pno."</td>
+                            <td>".$category."</td>
+                            <td>".$pname."</td>
+                            <td>".$price."</td>
+                          </tr>";
+                     }} ?>
                 </tbody>
               </table>
             </div>
@@ -225,31 +254,33 @@ desired effect
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <form role="form" action="options.php" method="post" name="curd">
               <div class="box-body">
                 <div class="form-group">
                   <label for="pid">Product ID</label>
-                  <input type="text" class="form-control" id="pid" placeholder="2896">
+                  <input type="text" class="form-control" id="pid" placeholder="2896" autocomplete="off">
+                  <div id="suggesstion-box-1"></div>
                 </div>
                 <div class="form-group">
                   <label for="pid">Product Name</label>
-                  <input type="text" class="form-control" id="pid" placeholder="Ubon Headset 166">
+                  <input type="text" class="form-control" id="pname" placeholder="Ubon Headset 166" autocomplete="off">
+                  <div id="suggesstion-box-2"></div>
                 </div>
                 <div class="form-group">
                   <label for="pid">Category</label>
-                  <input type="text" class="form-control" id="pid" placeholder="Headset">
+                  <input type="text" class="form-control" id="cate" placeholder="Headset" autocomplete="off">
                 </div>
                 <div class="form-group">
                   <label for="pid">Price</label>
-                  <input type="text" class="form-control" id="pid" placeholder="450">
+                  <input type="text" class="form-control" id="price" placeholder="450" autocomplete="off">
                 </div>
               </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-success">Add</button>
-                <button type="submit" class="btn btn-warning">Update</button>
-                <button type="submit" class="btn btn-danger pull-right">Delete</button>
+                <button type="submit" name="add" class="btn btn-success">Add</button>
+                <button type="submit" name="update" class="btn btn-warning">Update</button>
+                <button type="submit" name="delete" class="btn btn-danger pull-right">Delete</button>
               </div>
             </form>
           </div>
@@ -260,12 +291,32 @@ desired effect
           <!-- general form elements -->
           <div class="box box-danger">
             <div class="box-header with-border">
-              <h3 class="box-title">Import &amp; Export</h3>
+              <h3 class="box-title">Import</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <button type="submit" class="btn btn-primary">IMPORT</button>
-              <button type="submit" class="btn btn-secondary">EXPORT</button>
+            <form action="importcsv.php" method="post" name="upload_excel" enctype="multipart/form-data">
+            <p class="text-primary">Supports only CSV format</p>
+             <div class="input-group image-preview">
+                <input type="text" class="form-control image-preview-filename" name="file" disabled>
+                  <span class="input-group-btn">
+                    <!-- image-preview-clear button -->
+                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <!-- image-preview-input -->
+                    <div class="btn btn-default image-preview-input">
+                        <span class="image-preview-input-title">
+                          <span class="glyphicon glyphicon-folder-open"></span>
+                        </span>
+                        <input type="file" accept=".csv" name="file"/> <!-- rename it -->
+                    </div>
+                    <button class="btn btn-default image-preview-input" type="submit" id="submit" name="Import">
+                        <span class="glyphicon glyphicon-import"></span> Import
+                    </button>
+                  </span>
+              </div>
+            </form>
             </div>
               <!-- /.box-body -->
 
@@ -328,25 +379,133 @@ desired effect
 <script type="text/javascript">
 $(document).ready( function () {
     $('#db-tb').DataTable({
-      paging: false,
-      scrollY: 385,
+      paging: true,
+      scrollY: 424,
       responsive: true,
       dom: 'Bfrtip',
-      buttons: [
-          'colvis',
-          'csv',
-          'print',
-          'selectAll',
-          'selectNone'
+      "processing": true,
+      "deferRender": true,
+      responsive: true,
+      "columns": [
+        null,
+        { "orderable": false },
+        null,
+        { "orderable": false }
       ],
-      language: {
-        buttons: {
-            selectAll: "Select all items",
-            selectNone: "Select none"
+      keys: {
+        columns: [ 1, 2, 3, 4 ],
+      },
+      buttons: [
+        {
+          extend: 'copy',
+          className: "btn-sm"
+        },
+        {
+          extend: 'csv',
+          className: "btn-sm"
+        },
+        {
+          extend: 'print',
+          className: "btn-sm"
         }
-    }
+      ]
+      
     });
 } );
+</script>
+
+<script type="text/javascript">
+  $(document).on('click', '#close-preview', function(){ 
+    $('.image-preview').popover('hide');
+    // Hover befor close the preview    
+});
+
+$(function() {
+    // Create the close button
+    var closebtn = $('<button/>', {
+        type:"button",
+        text: 'x',
+        id: 'close-preview',
+        style: 'font-size: initial;',
+    });
+    closebtn.attr("class","close pull-right");
+
+    // Clear event
+    $('.image-preview-clear').click(function(){
+        $('.image-preview').attr("data-content","").popover('hide');
+        $('.image-preview-filename').val("");
+        $('.image-preview-clear').hide();
+        $('.image-preview-input input:file').val("");
+        $(".image-preview-input-title").text("Browse"); 
+    }); 
+    // Create the preview image
+    $(".image-preview-input input:file").change(function (){     
+        var img = $('<img/>', {
+            id: 'dynamic',
+            width:250,
+            height:200
+        });      
+        var file = this.files[0];
+        var reader = new FileReader();
+        // Set preview image into the popover data-content
+        reader.onload = function (e) {
+            $(".image-preview-input-title").text("Change");
+            $(".image-preview-clear").show();
+            $(".image-preview-filename").val(file.name);
+        }        
+        reader.readAsDataURL(file);
+    });  
+});
+</script>
+
+<script type="text/javascript">
+  // AJAX call for autocomplete 
+    $(document).ready(function(){
+      $("#pid").keyup(function(){
+        $.ajax({
+        type: "POST",
+        url: "ajax-pidlist.php",
+        data:'keyword-pno='+$(this).val(),
+        beforeSend: function(){
+          $("#pid").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
+        },
+        success: function(data){
+          $("#suggesstion-box-1").show();
+          $("#suggesstion-box-1").html(data);
+          $("#pid").css("background","#FFF");
+        }
+        });
+      });
+    });
+</script>
+
+<script type="text/javascript">
+  // AJAX call for autocomplete 
+    $(document).ready(function(){
+      $("#pname").keyup(function(){
+        $.ajax({
+        type: "POST",
+        url: "ajax-pidlist.php",
+        data:'keyword-pname='+$(this).val(),
+        beforeSend: function(){
+          $("#pid").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
+        },
+        success: function(data){
+          $("#suggesstion-box-2").show();
+          $("#suggesstion-box-2").html(data);
+          $("#pid").css("background","#FFF");
+        }
+        });
+      });
+    });
+</script>
+
+<script type="text/javascript">
+      //To select country name
+    function selectpid(val) { $("#pid").val(val); $("#suggesstion-box-1").hide(); }
+    function selectpname(val) { $("#pname").val(val); $("#suggesstion-box-2").hide(); }
+    function selectcate(val) { $("#cate").val(val); }
+    function selectprice(val) { $("#price").val(val); }
 </script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
