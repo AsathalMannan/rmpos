@@ -181,7 +181,7 @@ desired effect
 
         <li class="header">ADMIN TOOLS</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="#"><i class="fa fa-pie-chart"></i> <span>Dashboard</span></a></li>
+        <li><a href="../board"><i class="fa fa-pie-chart"></i> <span>Dashboard</span></a></li>
         <li class="active"><a href="#"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
@@ -254,32 +254,33 @@ desired effect
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form" action="options.php" method="post" name="curd">
+
+            <form role="form" method="post" action="options.php" name="curd" autocomplete="off">
               <div class="box-body">
                 <div class="form-group">
                   <label for="pid">Product ID</label>
-                  <input type="text" class="form-control" id="pid" placeholder="2896" autocomplete="off">
+                  <input type="text" class="form-control" id="pid" placeholder="2896" name="pid">
                   <div id="suggesstion-box-1"></div>
                 </div>
                 <div class="form-group">
                   <label for="pid">Product Name</label>
-                  <input type="text" class="form-control" id="pname" placeholder="Ubon Headset 166" autocomplete="off">
+                  <input type="text" class="form-control" id="pname" placeholder="Ubon Headset 166" name="pname">
                   <div id="suggesstion-box-2"></div>
                 </div>
                 <div class="form-group">
                   <label for="pid">Category</label>
-                  <input type="text" class="form-control" id="cate" placeholder="Headset" autocomplete="off">
+                  <input type="text" class="form-control" id="cate" placeholder="Headset" name="cate">
                 </div>
                 <div class="form-group">
                   <label for="pid">Price</label>
-                  <input type="text" class="form-control" id="price" placeholder="450" autocomplete="off">
+                  <input type="text" class="form-control" id="price" placeholder="450" name="price">
                 </div>
               </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" name="add" class="btn btn-success">Add</button>
-                <button type="submit" name="update" class="btn btn-warning">Update</button>
+                <button type="submit" name="add" class="btn btn-default">Add</button>
+                <button type="submit" name="update" class="btn btn-default">Update</button>
                 <button type="submit" name="delete" class="btn btn-danger pull-right">Delete</button>
               </div>
             </form>
@@ -296,7 +297,8 @@ desired effect
             <!-- /.box-header -->
             <div class="box-body">
             <form action="importcsv.php" method="post" name="upload_excel" enctype="multipart/form-data">
-            <p class="text-primary">Supports only CSV format</p>
+            <p class="text-primary">Supports only CSV format <?php echo $pid ?></p>
+            
              <div class="input-group image-preview">
                 <input type="text" class="form-control image-preview-filename" name="file" disabled>
                   <span class="input-group-btn">
