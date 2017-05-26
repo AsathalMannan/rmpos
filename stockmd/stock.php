@@ -176,7 +176,7 @@ desired effect
         <li class="header">MENU</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="../"><i class="fa fa-cart-plus"></i> <span>Cart</span></a></li>
-        <li><a href="#"><i class="fa fa-database"></i> <span>Database</span></a></li>
+        <li><a href="../db.php"><i class="fa fa-database"></i> <span>Stock Book</span></a></li>
         <li><a href="#"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
 
         <li class="header">ADMIN TOOLS</li>
@@ -297,7 +297,7 @@ desired effect
             <!-- /.box-header -->
             <div class="box-body">
             <form action="importcsv.php" method="post" name="upload_excel" enctype="multipart/form-data">
-            <p class="text-primary">Supports only CSV format <?php echo $pid ?></p>
+            <p class="text-primary">Supports only CSV format</p>
             
              <div class="input-group image-preview">
                 <input type="text" class="form-control image-preview-filename" name="file" disabled>
@@ -349,6 +349,10 @@ desired effect
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/app.min.js"></script>
+
+<script type="text/javascript" src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+
+<script type="text/javascript" src="../plugins/fastclick/fastclick.min.js"></script>
 
 <!-- Datatable -->
 <!-- <script type="text/javascript" src="../DataTables/jQuery-2.2.4/jquery-2.2.4.min.js"></script> -->

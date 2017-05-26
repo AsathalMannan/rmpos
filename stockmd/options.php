@@ -50,14 +50,14 @@ if(isset($_POST["update"])){
 		{
 			echo "<script type=\"text/javascript\">
 					alert(\"Invalid Entry, Try Again !!\");
-					
+					window.location = \"stock.php\"
 				  </script>";		
 		}
 		
 		else {
 			  echo "<script type=\"text/javascript\">
 				alert(\"Updated '".$pname."' in Database successfully !\");
-				
+				window.location = \"stock.php\"
 			</script>";
 		}
 	         
@@ -83,15 +83,6 @@ if(isset($_POST["delete"])){
 		}
 	         
 	}
-
-
-
-// if(!isset($_POST["add"])){
-// 	echo "<script type=\"text/javascript\">
-// 			alert(\"Invalid File: Please Select file.\");
-// 			window.location = \"stock.php\"
-// 		  </script>";
-// }	 
 
 
  ?>

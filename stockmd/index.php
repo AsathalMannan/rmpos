@@ -122,7 +122,7 @@
       </div>
     </form>
 
-<!--     <a href="register.html" class="text-center">Register a new membership</a> -->
+    <a href="//rmpos.app" class="login-box-msg"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back to Cart Page</a>
 
   </div>
   <!-- /.login-box-body -->

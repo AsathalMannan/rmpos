@@ -84,7 +84,7 @@ desired effect
               <!-- The user image in the navbar-->
               <img src="dist/img/myAvatar.png" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Admin</span>
+              <span class="hidden-xs">User</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -92,7 +92,7 @@ desired effect
                 <img src="dist/img/myAvatar.png" class="img-circle" alt="User Image">
 
                 <p>
-                  Admin
+                  User
                   <small>Full Access</small>
                 </p>
               </li>
@@ -122,7 +122,7 @@ desired effect
         <li class="header">MENU</li>
         <!-- Optionally, you can add icons to the links -->
         <li class="active"><a href="#"><i class="fa fa-cart-plus"></i> <span>Cart</span></a></li>
-        <li><a href="#"><i class="fa fa-database"></i> <span>Database</span></a></li>
+        <li><a href="db.php"><i class="fa fa-database"></i> <span>Stock Book</span></a></li>
         <li><a href="#"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
 
         <li class="header">ADMIN TOOLS</li>
@@ -153,12 +153,15 @@ desired effect
           <div class="box card-cart">
             <div class="box-header">
               <h3 class="box-title">Cart List</h3>
+
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+             <button type="button" class="btn bg-purple delete-row">Delete Row</button>
               <table id="cart-tb" class="table table-bordered table-hover">
                 <thead>
                 <tr>
+                  <th>#</th>
                   <th>Product No.</th>
                   <th>Product Name</th>
                   <th>Category</th>
@@ -166,18 +169,6 @@ desired effect
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>Mozilla 1.0</td>
-                  <td>Win 95+ / OSX.1+</td>
-                  <td>1</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Mozilla 1.1</td>
-                  <td>Win 95+ / OSX.1+</td>
-                  <td>1.1</td>
-                  <td>A</td>
-                </tr>
                 </tbody>
               </table>
             </div>
@@ -186,7 +177,7 @@ desired effect
               <div class="row">
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
-                    <span class="description-percentage text-blue" style="font-size: 4em;">17</span><br>
+                    <span id="ttotal" class="description-percentage text-blue" style="font-size: 4em;">0</span><br>
                     <span class="description-text">No. of Items</span>
                   </div>
                   <!-- /.description-block -->
@@ -195,7 +186,7 @@ desired effect
                 
                 <div class="col-sm-3 col-xs-6 pull-right">
                   <div class="description-block">
-                    <span class="description-percentage text-green" style="font-size: 4em;">₹ 18</span><br>
+                    <span id="tprice" class="description-percentage text-green" style="font-size: 4em;">₹ 0</span><br>
                     <span class="description-text">Total Price</span>
                   </div>
                   <!-- /.description-block -->
@@ -221,13 +212,17 @@ desired effect
               <div class="box-body">
                 <div class="form-group">
                   <label for="pid">Product Id</label>
-                  <input type="text" class="form-control" id="pid" placeholder="2896">
+                  <input type="text" class="form-control" id="pid" placeholder="2896" autocomplete="off" onclick="ClearFields();">
+                  <div id="pname"></div>
+                  <div id="cate"></div>
+                  <div id="price"></div>
+                  <div id="suggesstion-box-1"></div>
                 </div>
               </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-success">Add</button>
+                <button id="add-entry" type="button" class="btn btn-success" onclick="sumTransaction()">Add</button>
               </div>
             </form>
           </div>
@@ -244,16 +239,16 @@ desired effect
             <div class="box-body">
               <table class="table table-hover">
                 <tr >
-                  <td>TOTAL COST:</td><td>₹ 2700</td>
+                  <td>TOTAL COST:</td><td>₹ <span id="tcost">0</span></td>
                 </tr>
                 <tr>
-                  <td>Discount:</td><td><input type="text" class="form-control" id="pid" placeholder="0"></td>
+                  <td>Discount:</td><td><input type="text" class="form-control" id="disc" placeholder="0" onkeyup="review();" autocomplete="off"></td>
                 </tr>
                 <tr>
-                  <td>Amount Given:</td><td><input type="text" class="form-control" id="pid" placeholder="3000"></td>
+                  <td>Amount Given:</td><td><input type="text" class="form-control" id="amnt" onkeyup="review();" placeholder="3000"></td>
                 </tr>
                 <tr>
-                  <td>Return:</td><td>₹ 300</td>
+                  <td>Return:</td><td>₹ <span id="return">0</span></td>
                 </tr>
               </table>
             </div>
@@ -287,9 +282,111 @@ desired effect
 <!-- AdminLTE App -->
 <script src="dist/js/app.min.js"></script>
 
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
+<script type="text/javascript" src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+
+<script type="text/javascript" src="plugins/fastclick/fastclick.min.js"></script>
+
+
+
+<script type="text/javascript">
+  // AJAX call for autocomplete 
+    $(document).ready(function(){
+      $("#pid").keyup(function(){
+        $.ajax({
+        type: "POST",
+        url: "stockmd/ajax-pidlist.php",
+        data:'keyword-pno='+$(this).val(),
+        beforeSend: function(){
+          $("#pid").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
+        },
+        success: function(data){
+          $("#suggesstion-box-1").show();
+          $("#suggesstion-box-1").html(data);
+          $("#pid").css("background","#FFF");
+        }
+        });
+      });
+    });
+
+
+    function selectpid(val) { $("#pid").val(val); $("#suggesstion-box-1").hide(); }
+    function selectpname(val) { $("#pname").val(val); }
+    function selectcate(val) { $("#cate").val(val); }
+    function selectprice(val) { $("#price").val(val); }
+
+    $(document).ready(function(){
+        $("#add-entry").click(function(){
+            var pid = $("#pid").val();
+            var pname = $("#pname").val();
+            var cate = $("#cate").val();
+            var price = $("#price").val();
+            var markup = "<tr><td><input type='checkbox' class name='record'></td><td>" + pid + "</td><td>" + pname + "</td><td>" + cate + "</td><td class='countable'>" + price + "</td></tr>";
+            $("#cart-tb tbody").append(markup); 
+        });
+        
+        // Find and remove selected table rows
+        $(".delete-row").click(function(){
+            $("table tbody").find('input[name="record"]').each(function(){
+              if($(this).is(":checked")){
+                    $(this).parents("tr").remove();
+                }
+            });
+        });
+    });    
+
+    function ClearFields() {
+     document.getElementById("pid").value = "";
+   }
+</script>
+
+<script type="text/javascript">
+var total = 0;
+$('#cart-tb tbody').on("DOMSubtreeModified", function(){ 
+    var td = document.querySelectorAll('#cart-tb > tbody > tr > td:last-child');
+
+    for (var i = 0; i < td.length; i++)
+    {
+        total += parseInt(td[i].innerText);
+    }
+    var row_count = $('#cart-tb tbody tr').length;
+
+    document.getElementById('tprice').innerText = ("₹ " + total);
+    document.getElementById('ttotal').innerText = row_count;
+    document.getElementById('tcost').innerText = total;
+
+});
+</script>
+
+<script type="text/javascript">
+var retur;
+var disc;
+var adisc;
+var amnt;
+
+function review(){ 
+  
+
+  amnt = document.getElementById('amnt').value;
+  disc = document.getElementById('disc').value;
+  adisc = total - disc;
+
+  retur = amnt - adisc;
+  // alert(amnt);
+  document.getElementById('return').innerText = retur;
+  
+}
+</script>
+
+<script type="text/javascript">
+  var arr = [];
+$("#ItemsTable tr").each(function(){
+    arr.push($(this).find("td:first").text());
+});
+for (i=0;i<arr.length;i++)
+{
+document.write(arr[i] + "<br >");
+}
+</script>
+
 </body>
 </html>

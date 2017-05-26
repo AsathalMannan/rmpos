@@ -121,14 +121,14 @@ desired effect
       <ul class="sidebar-menu">
         <li class="header">MENU</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-cart-plus"></i> <span>Cart</span></a></li>
-        <li><a href="#"><i class="fa fa-database"></i> <span>Database</span></a></li>
+        <li><a href="//rmpos.app"><i class="fa fa-cart-plus"></i> <span>Cart</span></a></li>
+        <li><a href="../db.php"><i class="fa fa-database"></i> <span>Stock Book</span></a></li>
         <li><a href="#"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
 
         <li class="header">ADMIN TOOLS</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href=""><i class="fa fa-pie-chart"></i> <span>Dashboard</span></a></li>
-        <li><a href="stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
+        <li class="active"><a href=""><i class="fa fa-pie-chart"></i> <span>Dashboard</span></a></li>
+        <li><a href="../stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -296,6 +296,10 @@ desired effect
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/app.min.js"></script>
+
+<script type="text/javascript" src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+
+<script type="text/javascript" src="../plugins/fastclick/fastclick.min.js"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

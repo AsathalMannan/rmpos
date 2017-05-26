@@ -11,6 +11,7 @@
     background-color: #fff;
     border-color: #ccc;    
 }
+
 .image-preview-input input[type=file] {
 	position: absolute;
 	top: 0;
@@ -22,6 +23,11 @@
 	opacity: 0;
 	filter: alpha(opacity=0);
 }
+
 .image-preview-input-title {
     margin-left:2px;
+}
+
+#pname, #cate, #price {
+	display: hidden;
 }

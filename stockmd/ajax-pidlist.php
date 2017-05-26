@@ -1,5 +1,6 @@
 <style type="text/css">
 	.custom-ul{
+		z-index: 999;
 		background: #333;
 		color: white;
 		opacity: 0.95;
