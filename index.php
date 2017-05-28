@@ -156,7 +156,7 @@ desired effect
 
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
+            <div class="box-body" id="carttable">
              <button type="button" class="btn bg-purple delete-row">Delete Row</button>
               <table id="cart-tb" class="table table-bordered table-hover">
                 <thead>
@@ -222,7 +222,7 @@ desired effect
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button id="add-entry" type="button" class="btn btn-success" onclick="sumTransaction()">Add</button>
+                <button id="add-entry" type="button" class="btn btn-success">Add</button>
               </div>
             </form>
           </div>
@@ -255,7 +255,7 @@ desired effect
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-success">Pay</button>
+                <button type="submit" class="btn btn-success clickable" onclick="senditems();">Pay</button>
                 <button type="submit" class="btn btn-danger">Cancel Bill</button>
               </div>
             
@@ -286,7 +286,13 @@ desired effect
 
 <script type="text/javascript" src="plugins/fastclick/fastclick.min.js"></script>
 
-
+<script type="text/javascript">
+  $(function(){
+    $('#carttable').slimScroll({
+        height: '250px'
+    });
+});
+</script>
 
 <script type="text/javascript">
   // AJAX call for autocomplete 
@@ -297,7 +303,7 @@ desired effect
         url: "stockmd/ajax-pidlist.php",
         data:'keyword-pno='+$(this).val(),
         beforeSend: function(){
-          $("#pid").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
+          $("#pid").css("background","#FFF no-repeat 165px");
         },
         success: function(data){
           $("#suggesstion-box-1").show();
@@ -343,7 +349,7 @@ desired effect
 var total = 0;
 $('#cart-tb tbody').on("DOMSubtreeModified", function(){ 
     var td = document.querySelectorAll('#cart-tb > tbody > tr > td:last-child');
-
+    total = 0;
     for (var i = 0; i < td.length; i++)
     {
         total += parseInt(td[i].innerText);
@@ -356,6 +362,14 @@ $('#cart-tb tbody').on("DOMSubtreeModified", function(){
 
 });
 </script>
+
+<form id="sampleForm" name="sampleForm" method="post" action="payment.php">
+<input type="hidden" name="arrayer" id="arrayer" value="">
+<input type="hidden" name="amount" id="amount" value="">
+<input type="hidden" name="discount" id="discount" value="">
+<input type="hidden" name="adiscount" id="adiscount" value="">
+<input type="hidden" name="return" id="return" value="">
+</form>
 
 <script type="text/javascript">
 var retur;
@@ -375,17 +389,34 @@ function review(){
   document.getElementById('return').innerText = retur;
   
 }
-</script>
 
-<script type="text/javascript">
-  var arr = [];
-$("#ItemsTable tr").each(function(){
-    arr.push($(this).find("td:first").text());
-});
-for (i=0;i<arr.length;i++)
-{
-document.write(arr[i] + "<br >");
-}
+function senditems(){
+
+var table = document.getElementById('cart-tb');
+var i=0;
+var arr = new Array();
+        for (var r = 1, n = table.rows.length; r < n; r++) {
+            // for (var c = 1, m = 1; c = m; c++) {
+               arr[i] = table.rows[r].cells[1].innerHTML;
+               i++;
+            // }
+        }
+      }
+
+$(".clickable").click(function() {
+                //alert($(this).attr('id'));
+                $.ajax({
+                    type: "POST",
+                    url: 'payment.php',
+                    data: {arrayer: arr, amount: amnt, discount: disc, adiscount: adisc, return: retur},
+                    cache: false,
+                    success: function(data)
+                    {
+                        alert("success!");
+                    }
+                });
+            });
+
 </script>
 
 </body>
