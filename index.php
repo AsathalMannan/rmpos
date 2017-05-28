@@ -288,8 +288,9 @@ desired effect
 
 <script type="text/javascript">
   $(function(){
+    $('#carttable').height();
     $('#carttable').slimScroll({
-        height: '250px'
+        height: '352px'
     });
 });
 </script>
@@ -347,6 +348,7 @@ desired effect
 
 <script type="text/javascript">
 var total = 0;
+var row_count = $('#cart-tb tbody tr').length;
 $('#cart-tb tbody').on("DOMSubtreeModified", function(){ 
     var td = document.querySelectorAll('#cart-tb > tbody > tr > td:last-child');
     total = 0;
@@ -354,7 +356,6 @@ $('#cart-tb tbody').on("DOMSubtreeModified", function(){
     {
         total += parseInt(td[i].innerText);
     }
-    var row_count = $('#cart-tb tbody tr').length;
 
     document.getElementById('tprice').innerText = ("₹ " + total);
     document.getElementById('ttotal').innerText = row_count;
@@ -390,11 +391,12 @@ function review(){
   
 }
 
+var arr = new Array();
 function senditems(){
 
 var table = document.getElementById('cart-tb');
 var i=0;
-var arr = new Array();
+
         for (var r = 1, n = table.rows.length; r < n; r++) {
             // for (var c = 1, m = 1; c = m; c++) {
                arr[i] = table.rows[r].cells[1].innerHTML;
@@ -405,10 +407,11 @@ var arr = new Array();
 
 $(".clickable").click(function() {
                 //alert($(this).attr('id'));
+                var arr1 = JSON.stringify(arr);
                 $.ajax({
                     type: "POST",
                     url: 'payment.php',
-                    data: {arrayer: arr, amount: amnt, discount: disc, adiscount: adisc, return: retur},
+                    data: {arrayer: arr1, amount: amnt, discount: disc, adiscount: adisc, return: retur, titems: row_count},
                     cache: false,
                     success: function(data)
                     {
