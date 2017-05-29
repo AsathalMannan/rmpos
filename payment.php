@@ -44,10 +44,14 @@ while( $f_stock = mysqli_fetch_assoc($row_stockdb)){
                     $adate=$f_stock["adate"];
                    }
 
-$q_in_billtb = "INSERT INTO billdb.`billtb` (`billno`, `bdate`, `pno`, `pname`, `category`, `price`, `adate`) VALUES ('".$billno."', '".$date."', '".$pno."', '".$pname."', '".$category."', '".$price."', '".$adate."')";
+$q_in_billtb = "INSERT INTO billdb.`billtb` (`billno`, `bdate`, `tprice`, `discount`, `cash`, `gtotal`, `chng`) VALUES ('".$billno."', '".$date."', '".$total."', '".$discount."', '".$amount."', '".$adiscount."', '".$return."')";
 $row_billtb = $conn->query($q_in_billtb);
 
+$q_insert = "INSERT INTO saletb (`billno`, `pid`, `pname`, `category`, `price`, `adate`) VALUES ('".$billno."','".$pno."','".$pname."','".$category."','".$price."','".$adate."')";
+$result1 = mysqli_query($conn, $q_insert);
+
 $items[] = new item($pname , $price) ;
+
 
 
 $q_delete = "DELETE from stocktb WHERE pno='".$pno."'";
@@ -122,10 +126,10 @@ try {
 	$printer -> text($subtotal);
 	$printer -> text($pdiscount);
 	$printer -> text($pamount);
-	$printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
+	$printer -> setEmphasis(true);
 	$printer -> text($ptotal);
 	$printer -> text($pchange);
-	$printer -> selectPrintMode();
+	$printer -> setEmphasis(false);
 
 	/* Footer */
 	$printer -> feed(2);
@@ -157,9 +161,9 @@ try {
     {
         $rightCols = 10;
         $leftCols = 38;
-        if ($this -> rupeesign) {
-            $leftCols = $leftCols / 2 - $rightCols / 2;
-        }
+        // if ($this -> rupeesign) {
+        //     $leftCols = $leftCols / 2 - $rightCols / 2;
+        // }
         $left = str_pad($this -> name, $leftCols) ;
 
         $sign = ($this -> rupeesign ? 'Rs. ' : '');
