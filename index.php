@@ -348,7 +348,7 @@ desired effect
 
 <script type="text/javascript">
 var total = 0;
-var row_count = $('#cart-tb tbody tr').length;
+var row_count;
 $('#cart-tb tbody').on("DOMSubtreeModified", function(){ 
     var td = document.querySelectorAll('#cart-tb > tbody > tr > td:last-child');
     total = 0;
@@ -357,6 +357,7 @@ $('#cart-tb tbody').on("DOMSubtreeModified", function(){
         total += parseInt(td[i].innerText);
     }
 
+    row_count = $('#cart-tb tbody tr').length;
     document.getElementById('tprice').innerText = ("₹ " + total);
     document.getElementById('ttotal').innerText = row_count;
     document.getElementById('tcost').innerText = total;
@@ -411,7 +412,7 @@ $(".clickable").click(function() {
                 $.ajax({
                     type: "POST",
                     url: 'payment.php',
-                    data: {arrayer: arr1, amount: amnt, discount: disc, adiscount: adisc, return: retur, titems: row_count},
+                    data: {arrayer: arr1, amount: amnt, discount: disc, adiscount: adisc, return: retur, titems: row_count, amtot: total},
                     cache: false,
                     success: function(data)
                     {
