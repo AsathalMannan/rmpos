@@ -1,8 +1,9 @@
+<?php
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+?>
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html>
 <head>
   <meta charset="utf-8">
@@ -24,6 +25,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   -->
   <link rel="stylesheet" href="dist/css/skins/skin-purple.min.css">
   <link rel="stylesheet" href="rmpos.css">
+  <link rel="stylesheet" href="plugins/animate.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,26 +34,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
+
 <body class="hold-transition skin-purple sidebar-mini fixed">
 <div class="wrapper">
 
@@ -121,14 +104,14 @@ desired effect
       <ul class="sidebar-menu">
         <li class="header">MENU</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-cart-plus"></i> <span>Cart</span></a></li>
-        <li><a href="db.php"><i class="fa fa-database"></i> <span>Stock Book</span></a></li>
-        <li><a href="#"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
+        <li class="active"><a href=""><i class="fa fa-cart-plus"></i> <span>Cart</span></a></li>
+        <li><a href="db.php"><i class="fa fa-book"></i> <span>Stock Book</span></a></li>
 
         <li class="header">ADMIN TOOLS</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="board"><i class="fa fa-pie-chart"></i> <span>Dashboard</span></a></li>
-        <li><a href="stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
+        <li><a href="admin/board"><i class="fa fa-pie-chart"></i> <span>Dashboard</span></a></li>
+        <li><a href="admin/stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
+        <li><a href="admin/salehistory.php"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -265,13 +248,25 @@ desired effect
       
 
       </div>
+      <div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">
+        <button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>
+        <span data-notify="icon"></span>
+        <span data-notify="title">{1}</span>
+        <span data-notify="message">{2}</span>
+        <div class="progress" data-notify="progressbar">
+          <div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+        </div>
+        <a href="{3}" target="{4}" data-notify="url"></a>
+      </div>
 
     </section>
     <!-- /.content -->
+    
   </div>
   <!-- /.content-wrapper -->
 </div>
 <!-- ./wrapper -->
+
 
 <!-- REQUIRED JS SCRIPTS -->
 
@@ -285,6 +280,12 @@ desired effect
 <script type="text/javascript" src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
 
 <script type="text/javascript" src="plugins/fastclick/fastclick.min.js"></script>
+
+<script type="text/javascript" src="plugins/bootstrap-notify-3.1.3/dist/bootstrap-notify.min.js"></script>
+
+<script type="text/javascript">
+  
+</script>
 
 <script type="text/javascript">
   $(function(){
@@ -416,7 +417,19 @@ $(".clickable").click(function() {
                     cache: false,
                     success: function(data)
                     {
-                        alert("success!");
+                      $.notify({
+                          title: '<strong>Heads up!</strong>',
+                          message: 'You can use any of bootstraps other alert styles as well by default.',
+                          animate: {
+                              enter: 'animated flipInY',
+                              exit: 'animated flipOutX'
+                            }
+                        },{
+                          type: 'success'
+                        });
+                      setTimeout(function(){
+                      location.reload(true); // then reload the page.(3)
+                      }, 5000);
                     }
                 });
             });

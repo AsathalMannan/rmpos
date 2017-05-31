@@ -1,7 +1,7 @@
 <?php
  ob_start();
  session_start();
- require_once '../dbconnect.php';
+ require_once '../../dbconnect.php';
  // if session is not set this will redirect to login page
  if( !isset($_SESSION['user']) ) {
   header("Location: index.php");
@@ -21,10 +21,7 @@ $row_stockdb = $conn->query($query);
 
 ?>
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
+
 <html>
 <head>
   <meta charset="utf-8">
@@ -33,34 +30,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect.
   -->
-  <link rel="stylesheet" href="../dist/css/skins/skin-purple.min.css">
-  <link rel="stylesheet" href="../rmpos.css">
+  <link rel="stylesheet" href="../../dist/css/skins/skin-purple.min.css">
+  <link rel="stylesheet" href="../../rmpos.css">
 
   <!-- Datatables -->
   <!-- <link rel="stylesheet" type="text/css" href="../DataTables/Bootstrap-3.3.7/css/bootstrap.min.css"/> -->
-  <link rel="stylesheet" type="text/css" href="../DataTables/DataTables-1.10.15/css/dataTables.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/AutoFill-2.2.0/css/autoFill.bootstrap.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/Buttons-1.3.1/css/buttons.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/ColReorder-1.3.3/css/colReorder.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/FixedColumns-3.2.2/css/fixedColumns.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/FixedHeader-3.1.2/css/fixedHeader.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/KeyTable-2.2.1/css/keyTable.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/Responsive-2.1.1/css/responsive.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/RowGroup-1.0.0/css/rowGroup.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/RowReorder-1.2.0/css/rowReorder.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/Scroller-1.4.2/css/scroller.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/Select-1.2.2/css/select.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../../DataTables/DataTables-1.10.15/css/dataTables.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../../DataTables/AutoFill-2.2.0/css/autoFill.bootstrap.css"/>
+  <link rel="stylesheet" type="text/css" href="../../DataTables/Buttons-1.3.1/css/buttons.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../../DataTables/ColReorder-1.3.3/css/colReorder.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../../DataTables/FixedColumns-3.2.2/css/fixedColumns.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../../DataTables/FixedHeader-3.1.2/css/fixedHeader.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../../DataTables/KeyTable-2.2.1/css/keyTable.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../../DataTables/Responsive-2.1.1/css/responsive.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../../DataTables/RowGroup-1.0.0/css/rowGroup.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../../DataTables/RowReorder-1.2.0/css/rowReorder.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../../DataTables/Scroller-1.4.2/css/scroller.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../../DataTables/Select-1.2.2/css/select.bootstrap.min.css"/>
   <!-- /Datatables-->
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -86,26 +83,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 }
 </style>
 </head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
+
 <body class="hold-transition skin-purple sidebar-mini fixed">
 <div class="wrapper">
 
@@ -136,14 +114,14 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="../dist/img/myAvatar.png" class="user-image" alt="User Image">
+              <img src="../../dist/img/myAvatar.png" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs">Admin</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="../dist/img/myAvatar.png" class="img-circle" alt="User Image">
+                <img src="../../dist/img/myAvatar.png" class="img-circle" alt="User Image">
 
                 <p>
                   Admin
@@ -156,7 +134,7 @@ desired effect
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="../logout.php?logout" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="../../logout.php?logout" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -176,13 +154,13 @@ desired effect
         <li class="header">MENU</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="../"><i class="fa fa-cart-plus"></i> <span>Cart</span></a></li>
-        <li><a href="../db.php"><i class="fa fa-database"></i> <span>Stock Book</span></a></li>
-        <li><a href="#"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
+        <li><a href="../db.php"><i class="fa fa-book"></i> <span>Stock Book</span></a></li>
 
         <li class="header">ADMIN TOOLS</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="../board"><i class="fa fa-pie-chart"></i> <span>Dashboard</span></a></li>
-        <li class="active"><a href="#"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
+        <li class="active"><a href=""><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
+        <li><a href="../salehistory.php"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -344,41 +322,41 @@ desired effect
 
 <!-- jQuery 2.2.3 -->
 <!-- <script type="text/javascript" src="../DataTables/jQuery-2.2.4/jquery-2.2.4.min.js"></script> -->
-<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script src="../../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../dist/js/app.min.js"></script>
+<script src="../../dist/js/app.min.js"></script>
 
-<script type="text/javascript" src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script type="text/javascript" src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
 
-<script type="text/javascript" src="../plugins/fastclick/fastclick.min.js"></script>
+<script type="text/javascript" src="../../plugins/fastclick/fastclick.min.js"></script>
 
 <!-- Datatable -->
 <!-- <script type="text/javascript" src="../DataTables/jQuery-2.2.4/jquery-2.2.4.min.js"></script> -->
 <!-- <script type="text/javascript" src="../DataTables/Bootstrap-3.3.7/js/bootstrap.min.js"></script> -->
-<script type="text/javascript" src="../DataTables/JSZip-3.1.3/jszip.min.js"></script>
-<script type="text/javascript" src="../DataTables/pdfmake-0.1.27/build/pdfmake.min.js"></script>
-<script type="text/javascript" src="../DataTables/pdfmake-0.1.27/build/vfs_fonts.js"></script>
-<script type="text/javascript" src="../DataTables/DataTables-1.10.15/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="../DataTables/DataTables-1.10.15/js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="../DataTables/AutoFill-2.2.0/js/dataTables.autoFill.min.js"></script>
-<script type="text/javascript" src="../DataTables/AutoFill-2.2.0/js/autoFill.bootstrap.min.js"></script>
-<script type="text/javascript" src="../DataTables/Buttons-1.3.1/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="../DataTables/Buttons-1.3.1/js/buttons.bootstrap.min.js"></script>
-<script type="text/javascript" src="../DataTables/Buttons-1.3.1/js/buttons.colVis.min.js"></script>
-<script type="text/javascript" src="../DataTables/Buttons-1.3.1/js/buttons.html5.min.js"></script>
-<script type="text/javascript" src="../DataTables/Buttons-1.3.1/js/buttons.print.min.js"></script>
-<script type="text/javascript" src="../DataTables/ColReorder-1.3.3/js/dataTables.colReorder.min.js"></script>
-<script type="text/javascript" src="../DataTables/FixedColumns-3.2.2/js/dataTables.fixedColumns.min.js"></script>
-<script type="text/javascript" src="../DataTables/FixedHeader-3.1.2/js/dataTables.fixedHeader.min.js"></script>
-<script type="text/javascript" src="../DataTables/KeyTable-2.2.1/js/dataTables.keyTable.min.js"></script>
-<script type="text/javascript" src="../DataTables/Responsive-2.1.1/js/dataTables.responsive.min.js"></script>
-<script type="text/javascript" src="../DataTables/Responsive-2.1.1/js/responsive.bootstrap.min.js"></script>
-<script type="text/javascript" src="../DataTables/RowGroup-1.0.0/js/dataTables.rowGroup.min.js"></script>
-<script type="text/javascript" src="../DataTables/RowReorder-1.2.0/js/dataTables.rowReorder.min.js"></script>
-<script type="text/javascript" src="../DataTables/Scroller-1.4.2/js/dataTables.scroller.min.js"></script>
-<script type="text/javascript" src="../DataTables/Select-1.2.2/js/dataTables.select.min.js"></script>
+<script type="text/javascript" src="../../DataTables/JSZip-3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="../../DataTables/pdfmake-0.1.27/build/pdfmake.min.js"></script>
+<script type="text/javascript" src="../../DataTables/pdfmake-0.1.27/build/vfs_fonts.js"></script>
+<script type="text/javascript" src="../../DataTables/DataTables-1.10.15/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../DataTables/DataTables-1.10.15/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="../../DataTables/AutoFill-2.2.0/js/dataTables.autoFill.min.js"></script>
+<script type="text/javascript" src="../../DataTables/AutoFill-2.2.0/js/autoFill.bootstrap.min.js"></script>
+<script type="text/javascript" src="../../DataTables/Buttons-1.3.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="../../DataTables/Buttons-1.3.1/js/buttons.bootstrap.min.js"></script>
+<script type="text/javascript" src="../../DataTables/Buttons-1.3.1/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../../DataTables/Buttons-1.3.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="../../DataTables/Buttons-1.3.1/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="../../DataTables/ColReorder-1.3.3/js/dataTables.colReorder.min.js"></script>
+<script type="text/javascript" src="../../DataTables/FixedColumns-3.2.2/js/dataTables.fixedColumns.min.js"></script>
+<script type="text/javascript" src="../../DataTables/FixedHeader-3.1.2/js/dataTables.fixedHeader.min.js"></script>
+<script type="text/javascript" src="../../DataTables/KeyTable-2.2.1/js/dataTables.keyTable.min.js"></script>
+<script type="text/javascript" src="../../DataTables/Responsive-2.1.1/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="../../DataTables/Responsive-2.1.1/js/responsive.bootstrap.min.js"></script>
+<script type="text/javascript" src="../../DataTables/RowGroup-1.0.0/js/dataTables.rowGroup.min.js"></script>
+<script type="text/javascript" src="../../DataTables/RowReorder-1.2.0/js/dataTables.rowReorder.min.js"></script>
+<script type="text/javascript" src="../../DataTables/Scroller-1.4.2/js/dataTables.scroller.min.js"></script>
+<script type="text/javascript" src="../../DataTables/Select-1.2.2/js/dataTables.select.min.js"></script>
 <!--/Datatable-->
 
 <!--Datatable init-->
@@ -473,7 +451,7 @@ $(function() {
         url: "ajax-pidlist.php",
         data:'keyword-pno='+$(this).val(),
         beforeSend: function(){
-          $("#pid").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
+          $("#pid").css("background","#FFF no-repeat 165px");
         },
         success: function(data){
           $("#suggesstion-box-1").show();
@@ -494,7 +472,7 @@ $(function() {
         url: "ajax-pidlist.php",
         data:'keyword-pname='+$(this).val(),
         beforeSend: function(){
-          $("#pid").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
+          $("#pid").css("background","#FFF no-repeat 165px");
         },
         success: function(data){
           $("#suggesstion-box-2").show();

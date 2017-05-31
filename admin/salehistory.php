@@ -4,15 +4,14 @@ $password="pass123";
 $database="stock";
 $conn = mysqli_connect("localhost", $username, $password, $database);
 
-$query = "SELECT pno,pname,category,price FROM stocktb";
-$row_stockdb = $conn->query($query);
+$q_billtb = "SELECT * FROM `billdb`.`billtb`";
+$row_billtb = $conn->query($q_billtb);
+
+$q_saletb = "SELECT billno, pid, pname, category, price FROM `saletb`";
+$row_saletb = $conn->query($q_saletb);
 
 ?>
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html>
 <head>
   <meta charset="utf-8">
@@ -39,7 +38,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- <link rel="stylesheet" type="text/css" href="../DataTables/Bootstrap-3.3.7/css/bootstrap.min.css"/> -->
   <link rel="stylesheet" type="text/css" href="../DataTables/DataTables-1.10.15/css/dataTables.bootstrap.min.css"/>
   <link rel="stylesheet" type="text/css" href="../DataTables/AutoFill-2.2.0/css/autoFill.bootstrap.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/Buttons-1.3.1/css/buttons.bootstrap.min.css"/>
+  <!-- <link rel="stylesheet" type="text/css" href="../DataTables/Buttons-1.3.1/css/buttons.bootstrap.min.css"/> -->
   <link rel="stylesheet" type="text/css" href="../DataTables/ColReorder-1.3.3/css/colReorder.bootstrap.min.css"/>
   <link rel="stylesheet" type="text/css" href="../DataTables/FixedColumns-3.2.2/css/fixedColumns.bootstrap.min.css"/>
   <link rel="stylesheet" type="text/css" href="../DataTables/FixedHeader-3.1.2/css/fixedHeader.bootstrap.min.css"/>
@@ -145,13 +144,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <li class="header">MENU</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="../"><i class="fa fa-cart-plus"></i> <span>Cart</span></a></li>
-        <li class="active"><a href="#"><i class="fa fa-book"></i> <span>Stock Book</span></a></li>
-
+        <li><a href="#"><i class="fa fa-book"></i> <span>Stock Book</span></a></li>
         <li class="header">ADMIN TOOLS</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="admin/board"><i class="fa fa-pie-chart"></i> <span>Dashboard</span></a></li>
-        <li><a href="admin/stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
-        <li><a href="admin/salehistory.php"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
+        <li><a href="board"><i class="fa fa-pie-chart"></i> <span>Dashboard</span></a></li>
+        <li><a href="stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
+        <li class="active"><a href=""><i class="fa fa-history"></i> <span>Sales History</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -175,7 +173,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="col-md-12">
           <div class="box card-cart">
             <div class="box-header">
-              <h3 class="box-title">Stock Book</h3>
+              <h3 class="box-title">Bill Book</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
             </div>
 
             
@@ -184,24 +186,82 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <table id="db-tb" class="table table-bordered table-hover" data-page-length='25'>
                 <thead>
                 <tr>
-                  <th>Product No.</th>
-                  <th>Category</th>
-                  <th>Product Name</th>
-                  <th>Price (₹)</th>
+                  <th>Bill No.</th>
+                  <th>Bill Date</th>
+                  <th>Subtotal</th>
+                  <th>Discount</th>
+                  <th>Cash</th>
+                  <th>Total</th>
+                  <th>Change</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
-                  if(!empty($row_stockdb)){
-                    while( $f_stock = mysqli_fetch_assoc($row_stockdb)){
-                    $pno=$f_stock["pno"];
-                    $pname=$f_stock["pname"];
-                    $category=$f_stock["category"];
-                    $price=$f_stock["price"];
+                  if(!empty($row_billtb)){
+                    while( $f_billtb = mysqli_fetch_assoc($row_billtb)){
+                    $billno=$f_billtb["billno"];
+                    $bdate=$f_billtb["bdate"];
+                    $tprice=$f_billtb["tprice"];
+                    $discount=$f_billtb["discount"];
+                    $cash=$f_billtb["cash"];
+                    $gtotal=$f_billtb["gtotal"];
+                    $chng=$f_billtb["chng"];
                     echo "<tr>
-                            <td>".$pno."</td>
-                            <td>".$category."</td>
+                            <td>".$billno."</td>
+                            <td>".$bdate."</td>
+                            <td>".$tprice."</td>
+                            <td>".$discount."</td>
+                            <td>".$cash."</td>
+                            <td>".$gtotal."</td>
+                            <td>".$chng."</td>
+                          </tr>";
+                     }} ?>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+            
+          </div>
+          <!-- /.box -->
+        </div>
+
+        <div class="col-md-12">
+          <div class="box card-cart">
+            <div class="box-header">
+              <h3 class="box-title">Sale Book</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+            </div>
+
+            
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="db2-tb" class="table table-bordered table-hover" data-page-length='25'>
+                <thead>
+                <tr>
+                  <th>Bill No.</th>
+                  <th>Product Id</th>
+                  <th>Product Name</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                  if(!empty($row_saletb)){
+                    while( $f_saletb = mysqli_fetch_assoc($row_saletb)){
+                    $billno=$f_saletb["billno"];
+                    $pid=$f_saletb["pid"];
+                    $pname=$f_saletb["pname"];
+                    $category=$f_saletb["category"];
+                    $price=$f_saletb["price"];
+                    echo "<tr>
+                            <td>#".$billno."</td>
+                            <td>".$pid."</td>
                             <td>".$pname."</td>
+                            <td>".$category."</td>
                             <td>".$price."</td>
                           </tr>";
                      }} ?>
@@ -228,41 +288,36 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- jQuery 2.2.3 -->
 <!-- <script type="text/javascript" src="../DataTables/jQuery-2.2.4/jquery-2.2.4.min.js"></script> -->
-<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
-<script src="dist/js/app.min.js"></script>
+<script src="../dist/js/app.min.js"></script>
 
-<script type="text/javascript" src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script type="text/javascript" src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
 
-<script type="text/javascript" src="plugins/fastclick/fastclick.min.js"></script>
+<script type="text/javascript" src="../plugins/fastclick/fastclick.min.js"></script>
 
 <!-- Datatable -->
 <!-- <script type="text/javascript" src="../DataTables/jQuery-2.2.4/jquery-2.2.4.min.js"></script> -->
 <!-- <script type="text/javascript" src="../DataTables/Bootstrap-3.3.7/js/bootstrap.min.js"></script> -->
-<script type="text/javascript" src="DataTables/JSZip-3.1.3/jszip.min.js"></script>
-<script type="text/javascript" src="DataTables/pdfmake-0.1.27/build/pdfmake.min.js"></script>
-<script type="text/javascript" src="DataTables/pdfmake-0.1.27/build/vfs_fonts.js"></script>
-<script type="text/javascript" src="DataTables/DataTables-1.10.15/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="DataTables/DataTables-1.10.15/js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="DataTables/AutoFill-2.2.0/js/dataTables.autoFill.min.js"></script>
-<script type="text/javascript" src="DataTables/AutoFill-2.2.0/js/autoFill.bootstrap.min.js"></script>
-<script type="text/javascript" src="DataTables/Buttons-1.3.1/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="DataTables/Buttons-1.3.1/js/buttons.bootstrap.min.js"></script>
-<script type="text/javascript" src="DataTables/Buttons-1.3.1/js/buttons.colVis.min.js"></script>
-<script type="text/javascript" src="DataTables/Buttons-1.3.1/js/buttons.html5.min.js"></script>
-<script type="text/javascript" src="DataTables/Buttons-1.3.1/js/buttons.print.min.js"></script>
-<script type="text/javascript" src="DataTables/ColReorder-1.3.3/js/dataTables.colReorder.min.js"></script>
-<script type="text/javascript" src="DataTables/FixedColumns-3.2.2/js/dataTables.fixedColumns.min.js"></script>
-<script type="text/javascript" src="DataTables/FixedHeader-3.1.2/js/dataTables.fixedHeader.min.js"></script>
-<script type="text/javascript" src="DataTables/KeyTable-2.2.1/js/dataTables.keyTable.min.js"></script>
-<script type="text/javascript" src="DataTables/Responsive-2.1.1/js/dataTables.responsive.min.js"></script>
-<script type="text/javascript" src="DataTables/Responsive-2.1.1/js/responsive.bootstrap.min.js"></script>
-<script type="text/javascript" src="DataTables/RowGroup-1.0.0/js/dataTables.rowGroup.min.js"></script>
-<script type="text/javascript" src="DataTables/RowReorder-1.2.0/js/dataTables.rowReorder.min.js"></script>
-<script type="text/javascript" src="DataTables/Scroller-1.4.2/js/dataTables.scroller.min.js"></script>
-<script type="text/javascript" src="DataTables/Select-1.2.2/js/dataTables.select.min.js"></script>
+<script type="text/javascript" src="../DataTables/JSZip-3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="../DataTables/pdfmake-0.1.27/build/pdfmake.min.js"></script>
+<script type="text/javascript" src="../DataTables/pdfmake-0.1.27/build/vfs_fonts.js"></script>
+<script type="text/javascript" src="../DataTables/DataTables-1.10.15/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../DataTables/DataTables-1.10.15/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="../DataTables/AutoFill-2.2.0/js/dataTables.autoFill.min.js"></script>
+<script type="text/javascript" src="../DataTables/AutoFill-2.2.0/js/autoFill.bootstrap.min.js"></script>
+<script type="text/javascript" src="../DataTables/ColReorder-1.3.3/js/dataTables.colReorder.min.js"></script>
+<script type="text/javascript" src="../DataTables/FixedColumns-3.2.2/js/dataTables.fixedColumns.min.js"></script>
+<script type="text/javascript" src="../DataTables/FixedHeader-3.1.2/js/dataTables.fixedHeader.min.js"></script>
+<script type="text/javascript" src="../DataTables/KeyTable-2.2.1/js/dataTables.keyTable.min.js"></script>
+<script type="text/javascript" src="../DataTables/Responsive-2.1.1/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="../DataTables/Responsive-2.1.1/js/responsive.bootstrap.min.js"></script>
+<script type="text/javascript" src="../DataTables/RowGroup-1.0.0/js/dataTables.rowGroup.min.js"></script>
+<script type="text/javascript" src="../DataTables/RowReorder-1.2.0/js/dataTables.rowReorder.min.js"></script>
+<script type="text/javascript" src="../DataTables/Scroller-1.4.2/js/dataTables.scroller.min.js"></script>
+<script type="text/javascript" src="../DataTables/Select-1.2.2/js/dataTables.select.min.js"></script>
 <!--/Datatable-->
 
 <!--Datatable init-->
@@ -277,25 +332,63 @@ $(document).ready( function () {
       "deferRender": true,
       responsive: true,
       "columns": [
-        null,
+        { "orderable": false },
         { "orderable": false },
         null,
-        { "orderable": false }
+        null,
+        null,
+        null,
+        null
       ],
       keys: {
-        columns: [ 1, 2, 3, 4 ],
+        columns: [ 1, 2, 3, 4, 5, 6, 7 ],
+      }
+      
+    });
+} );
+</script>
+<script type="text/javascript">
+$(document).ready( function () {
+    $('#db2-tb').DataTable({
+      paging: true,
+      scrollY: 280,
+      responsive: true,
+      dom: 'Bfrtip',
+      "processing": true,
+      "deferRender": true,
+      responsive: true,
+      "columns": [
+        { "orderable": false },
+        { "orderable": false },
+        null,
+        null,
+        null
+      ],
+      keys: {
+        columns: [ 1, 2, 3, 4, 5 ],
       },
-      buttons: [
-        'colvis'
-      ]
+      "columnDefs": [
+            { "visible": false, "targets": 0 }
+        ],
+      "drawCallback": function ( settings ) {
+            var api = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+            var last=null;
+ 
+            api.column(0, {page:'current'} ).data().each( function ( group, i ) {
+                if ( last !== group ) {
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td colspan="5">'+group+'</td></tr>'
+                    );
+ 
+                    last = group;
+                }
+            } );
+        }
       
     });
 } );
 </script>
 
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
 </body>
 </html>

@@ -60,7 +60,7 @@ $result2 = mysqli_query($conn, $q_delete);
 
 /*PRINTER CONFIG*/
 $subtotal = new item('Subtotal', $total);
-$pdiscount = new item('discount', $discount);
+$pdiscount = new item('Discount', $discount);
 $pamount = new item('Cash', $amount);
 $ptotal = new item('Total', $adiscount, true);
 $pchange = new item('Change', $return, true);
@@ -71,12 +71,14 @@ $pdate = date('d-m-Y');
 require __DIR__ . '/plugins/escpos-php/autoload.php';
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\CapabilityProfile;
 
 try {
     
+    $profile = CapabilityProfile::load("default");
     $connector = new WindowsPrintConnector("EPSON TM-T81 Receipt");
 
-    $printer = new Printer($connector);
+    $printer = new Printer($connector, $profile);
     $fonts = array(
 	Printer::FONT_A,
 	Printer::FONT_B);
