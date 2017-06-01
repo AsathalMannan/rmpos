@@ -147,7 +147,7 @@ $row_saletb = $conn->query($q_saletb);
         <li><a href="#"><i class="fa fa-book"></i> <span>Stock Book</span></a></li>
         <li class="header">ADMIN TOOLS</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="board"><i class="fa fa-pie-chart"></i> <span>Dashboard</span></a></li>
+        <li><a href="board"><i class="fa fa-info"></i> <span>Stock Info</span></a></li>
         <li><a href="stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
         <li class="active"><a href=""><i class="fa fa-history"></i> <span>Sales History</span></a></li>
       </ul>

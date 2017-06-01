@@ -109,7 +109,7 @@ header("Pragma: no-cache");
 
         <li class="header">ADMIN TOOLS</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="admin/board"><i class="fa fa-pie-chart"></i> <span>Dashboard</span></a></li>
+        <li><a href="admin/board"><i class="fa fa-info"></i> <span>Stock Info</span></a></li>
         <li><a href="admin/stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
         <li><a href="admin/salehistory.php"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
       </ul>
@@ -302,7 +302,7 @@ header("Pragma: no-cache");
       $("#pid").keyup(function(){
         $.ajax({
         type: "POST",
-        url: "stockmd/ajax-pidlist.php",
+        url: "admin/stockmd/ajax-pidlist.php",
         data:'keyword-pno='+$(this).val(),
         beforeSend: function(){
           $("#pid").css("background","#FFF no-repeat 165px");
