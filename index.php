@@ -112,6 +112,7 @@ header("Pragma: no-cache");
         <li><a href="admin/board"><i class="fa fa-info"></i> <span>Stock Info</span></a></li>
         <li><a href="admin/stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
         <li><a href="admin/salehistory.php"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
+        <li><a href="admin/saleb"><i class="fa fa-area-chart"></i> <span>Sales Report</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -140,7 +141,6 @@ header("Pragma: no-cache");
             </div>
             <!-- /.box-header -->
             <div class="box-body" id="carttable">
-             <button type="button" class="btn bg-purple delete-row">Delete Row</button>
               <table id="cart-tb" class="table table-bordered table-hover">
                 <thead>
                 <tr>
@@ -195,7 +195,7 @@ header("Pragma: no-cache");
               <div class="box-body">
                 <div class="form-group">
                   <label for="pid">Product Id</label>
-                  <input type="text" class="form-control" id="pid" placeholder="2896" autocomplete="off" onclick="ClearFields();">
+                  <input type="text" class="form-control" id="pid" placeholder="2896" autocomplete="off">
                   <div id="pname"></div>
                   <div id="cate"></div>
                   <div id="price"></div>
@@ -247,16 +247,6 @@ header("Pragma: no-cache");
         </div>
       
 
-      </div>
-      <div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">
-        <button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>
-        <span data-notify="icon"></span>
-        <span data-notify="title">{1}</span>
-        <span data-notify="message">{2}</span>
-        <div class="progress" data-notify="progressbar">
-          <div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-        </div>
-        <a href="{3}" target="{4}" data-notify="url"></a>
       </div>
 
     </section>
@@ -328,7 +318,7 @@ header("Pragma: no-cache");
             var pname = $("#pname").val();
             var cate = $("#cate").val();
             var price = $("#price").val();
-            var markup = "<tr><td><input type='checkbox' class name='record'></td><td>" + pid + "</td><td>" + pname + "</td><td>" + cate + "</td><td class='countable'>" + price + "</td></tr>";
+            var markup = "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td>" + pid + "</td><td>" + pname + "</td><td>" + cate + "</td><td class='countable'>" + price + "</td></tr>";
             $("#cart-tb tbody").append(markup); 
         });
         
@@ -342,9 +332,10 @@ header("Pragma: no-cache");
         });
     });    
 
-    function ClearFields() {
-     document.getElementById("pid").value = "";
-   }
+    $('#cart-tb').on('click', '#delete-row', function(){
+      $(this).closest ('tr').remove ();
+    });
+
 </script>
 
 <script type="text/javascript">
@@ -362,6 +353,8 @@ $('#cart-tb tbody').on("DOMSubtreeModified", function(){
     document.getElementById('tprice').innerText = ("₹ " + total);
     document.getElementById('ttotal').innerText = row_count;
     document.getElementById('tcost').innerText = total;
+
+    $('.form-group').find('input:text').val('');
 
 });
 </script>

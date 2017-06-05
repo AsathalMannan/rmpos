@@ -161,6 +161,7 @@ $row_stockdb = $conn->query($query);
         <li><a href="../board"><i class="fa fa-info"></i> <span>Stock Info</span></a></li>
         <li class="active"><a href=""><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
         <li><a href="../salehistory.php"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
+        <li><a href="../saleb"><i class="fa fa-area-chart"></i> <span>Sales Report</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

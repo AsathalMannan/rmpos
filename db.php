@@ -152,6 +152,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <li><a href="admin/board"><i class="fa fa-info"></i> <span>Stock Info</span></a></li>
         <li><a href="admin/stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
         <li><a href="admin/salehistory.php"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
+        <li><a href="admin/saleb"><i class="fa fa-area-chart"></i> <span>Sales Report</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
