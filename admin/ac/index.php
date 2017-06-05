@@ -410,17 +410,20 @@ var i=0;
 
 $(".clickable").click(function() {
                 //alert($(this).attr('id'));
+                total = document.getElementById('Total').innerText;
+                exp = document.getElementById('exp').innerText;
+                inc = document.getElementById('inc').innerText;
                 var arrn = JSON.stringify(arr0);
                 var arrt = JSON.stringify(arr1);
                 var arra = JSON.stringify(arr2);
                 $.ajax({
                     type: "POST",
                     url: 'jsonwriter.php',
-                    data: {arrayer0: arrn, arrayer1: arrt, arrayer2: arra, ledger: total },
+                    data: {arrayer0: arrn, arrayer1: arrt, arrayer2: arra, ledger: total, tinc: inc, texp: exp },
                     cache: false,
                     success: function(data)
                     {
-                      alert("success")
+                      // alert("success")
                       setTimeout(function(){
                       location.reload(true); // then reload the page.(3)
                       }, 5000);
