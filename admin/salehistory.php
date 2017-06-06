@@ -144,13 +144,16 @@ $row_saletb = $conn->query($q_saletb);
         <li class="header">MENU</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="../"><i class="fa fa-cart-plus"></i> <span>Cart</span></a></li>
-        <li><a href="#"><i class="fa fa-book"></i> <span>Stock Book</span></a></li>
-        <li class="header">ADMIN TOOLS</li>
+        <li><a href="../db.php"><i class="fa fa-book"></i> <span>Stock Book</span></a></li>
+        <li class="header">DASHBOARD</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="board"><i class="fa fa-info"></i> <span>Stock Info</span></a></li>
-        <li><a href="stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
+        <li><a href="board/"><i class="fa fa-info"></i> <span>Stock Info</span></a></li>
+        <li><a href="saleb/"><i class="fa fa-area-chart"></i> <span>Sales Info</span></a></li>
+
+        <li class="header">ADMIN TOOLS</li>
+        <li><a href="stockmd/"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
         <li class="active"><a href=""><i class="fa fa-history"></i> <span>Sales History</span></a></li>
-        <li><a href="../saleb"><i class="fa fa-area-chart"></i> <span>Sales Report</span></a></li>
+        <li><a href="ac/"><i class="fa fa-inr"></i> <span>Accounts</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

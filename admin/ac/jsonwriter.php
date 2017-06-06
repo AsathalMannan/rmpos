@@ -16,6 +16,7 @@ $texp = $_POST['texp'];
 $arrlength = count($arrayer2);
 $date = date("d-m-y");
 $content = array();
+$head = array();
 
 for($i=0;$i<$arrlength;$i++) {
 	
@@ -25,7 +26,7 @@ for($i=0;$i<$arrlength;$i++) {
 	'Amount' => $arrayer2[$i]);
 }
 
-$head = array(
+$head[] = array(
 	'Date' => $date,
 	'REPORT' => $content,
 	'TOTAL INCOME' => $tinc, 
