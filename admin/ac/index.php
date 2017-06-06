@@ -3,13 +3,19 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-// include 'sale.php';
-
 date_default_timezone_set('Asia/Kolkata');
 $username="root";
 $password="pass123";
 $database="stock";
 $conn = mysqli_connect("localhost", $username, $password, $database);
+
+$date = date("Y-m-d");
+$ydate = date("Y-m-d", strtotime("-1 day", strtotime($date)));
+
+$q_tt = "SELECT tt from accounts.`ac` WHERE rdate='".$ydate."'";
+$row_tt = $conn->query($q_tt);
+$f_tt = mysqli_fetch_assoc($row_tt);
+$tt=$f_tt["tt"];
 
 ?>
 <!DOCTYPE html>
@@ -148,6 +154,7 @@ $conn = mysqli_connect("localhost", $username, $password, $database);
             <!-- /.box-header -->
             <div class="box-body">
               <div class="row">
+
                 <div class="col-md-8 border-right">
                   <p class="text-center">
                     <strong>Today Report: <?php echo date("d-M-y") ?></strong>
@@ -159,13 +166,61 @@ $conn = mysqli_connect("localhost", $username, $password, $database);
                       <th>#</th>
                       <th>Name</th>
                       <th>Type</th>
-                      <th style="float: right;">Amount (₹)</th>
+                      <th style="text-align:right;">Amount (₹)</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr class="bg-info">
-                      <td></td><td>CASH IN LEDGER</td><td>In Ledger</td><td style="font-weight: bold; float: right;">100000</td>
-                    </tr>
+                  <?php 
+                    $q_tdate = "SELECT rdate from accounts.`ac` WHERE rdate='".$date."'";
+                    $row_tdate = $conn->query($q_tdate);
+                    $f_tdate = mysqli_fetch_assoc($row_tdate);
+                    $tdate=$f_tdate["rdate"];
+
+                    $q_ydate = "SELECT rdate from accounts.`ac` ORDER BY rdate DESC LIMIT 1";
+                    $row_ydate = $conn->query($q_ydate);
+                    $f_ydate = mysqli_fetch_assoc($row_ydate);
+                    $yedate=$f_ydate["rdate"];
+
+                    if ($tdate == $date){
+
+                      $query_type = "\"Update\";";
+                        // $q_tt = "SELECT tt from accounts.`ac` WHERE rdate='".$date."'";
+                        // $row_tt = $conn->query($q_tt);
+                        // $f_tt = mysqli_fetch_assoc($row_tt);
+                        // $tt=$f_tt["tt"];
+
+                        // $q_tt = "SELECT tinc from accounts.`ac` WHERE rdate='".$date."'";
+                        // $row_tt = $conn->query($q_tt);
+                        // $f_tt = mysqli_fetch_assoc($row_tt);
+                        // $tt=$f_tt["tt"];
+
+                        // $q_tt = "SELECT texp from accounts.`ac` WHERE rdate='".$date."'";
+                        // $row_tt = $conn->query($q_tt);
+                        // $f_tt = mysqli_fetch_assoc($row_tt);
+                        // $tt=$f_tt["tt"];
+                        
+                        $q_today = "SELECT name,type,amount FROM accounts.`collection` WHERE rdate='".$date."'";
+                        $row_today = $conn->query($q_today);
+                        while ($f_today = mysqli_fetch_assoc($row_today)){
+                          $today_name=$f_today["name"];
+                          $today_type=$f_today["type"];
+                          $today_amount=$f_today["amount"];
+
+                          echo "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td style='text-transform: uppercase;'>".$today_name."</td><td>".$today_type."</td><td style='font-weight: bold; text-align:right;'>".$today_amount."</td></tr>";
+                        }
+                      }
+
+                      else if($yedate == $ydate){
+                        $query_type = "\"Add\";";
+                        $q_tt = "SELECT tt from accounts.`ac` WHERE rdate='".$ydate."'";
+                        $row_tt = $conn->query($q_tt);
+                        $f_tt = mysqli_fetch_assoc($row_tt);
+                        $tt=$f_tt["tt"];
+
+                        echo "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td style='text-transform: uppercase;'>CASH IN LEDGER</td><td>In Ledger</td><td style='font-weight: bold; text-align:right;'>".$tt."</td></tr>";
+                      }
+              ?>
+                    
                   </tbody>
                   </table>
                   
@@ -183,7 +238,7 @@ $conn = mysqli_connect("localhost", $username, $password, $database);
                         <label for="entryname" class="col-sm-2 control-label">Name</label>
 
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="entryname" placeholder="Entry Name">
+                          <input type="text" class="form-control" id="entryname" placeholder="Entry Name" autocomplete="off">
                         </div>
                       </div>
                       <div class="form-group">
@@ -210,7 +265,7 @@ $conn = mysqli_connect("localhost", $username, $password, $database);
                         <div class="col-sm-12">
                           <div class="input-group">
                             <span class="input-group-addon">₹</span>
-                            <input id="amount" type="text" class="form-control">
+                            <input id="amount" type="text" class="form-control" autocomplete="off">
                             <span class="input-group-addon">.00</span>
                           </div>
                         </div>
@@ -221,7 +276,8 @@ $conn = mysqli_connect("localhost", $username, $password, $database);
                     <div class="box-footer">
                       <button type="reset" class="btn btn-warning">Reset</button>
                       <button id="add-entry" type="button" class="btn btn-success pull-right">Add</button>
-                      <button id="" type="button" class="btn btn-primary clickable" onclick="senditems();"">Save</button>
+                      <button id="" type="button" class="btn btn-primary clickable" onclick="senditems();"">
+                      <?php if($tdate == $date){echo "Update";} else {echo "Add";} ?></button>
                     </div>
                     <!-- /.box-footer -->
                   </form>
@@ -413,13 +469,14 @@ $(".clickable").click(function() {
                 total = document.getElementById('Total').innerText;
                 exp = document.getElementById('exp').innerText;
                 inc = document.getElementById('inc').innerText;
+                q_type = <?php echo $query_type; ?>
                 var arrn = JSON.stringify(arr0);
                 var arrt = JSON.stringify(arr1);
                 var arra = JSON.stringify(arr2);
                 $.ajax({
                     type: "POST",
-                    url: 'jsonwriter.php',
-                    data: {arrayer0: arrn, arrayer1: arrt, arrayer2: arra, ledger: total, tinc: inc, texp: exp },
+                    url: 'updatedb.php',
+                    data: {arrayer0: arrn, arrayer1: arrt, arrayer2: arra, ledger: total, tinc: inc, texp: exp, qtype: q_type },
                     cache: false,
                     success: function(data)
                     {
