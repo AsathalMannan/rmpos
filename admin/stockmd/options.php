@@ -29,14 +29,14 @@ if(isset($_POST["add"])){
 		{
 			echo "<script type=\"text/javascript\">
 					alert(\"Invalid Entry, Try again !!\");
-					window.location = \"stock.php\"
+					window.location = \"index.php\"
 				  </script>";		
 		}
 		
 		else {
 			  echo "<script type=\"text/javascript\">
 				alert(\"Added '".$pname."' in Database successfully !\");
-				window.location = \"stock.php\"
+				window.location = \"index.php\"
 			</script>";
 		}
      
@@ -50,14 +50,14 @@ if(isset($_POST["update"])){
 		{
 			echo "<script type=\"text/javascript\">
 					alert(\"Invalid Entry, Try Again !!\");
-					window.location = \"stock.php\"
+					window.location = \"index.php\"
 				  </script>";		
 		}
 		
 		else {
 			  echo "<script type=\"text/javascript\">
 				alert(\"Updated '".$pname."' in Database successfully !\");
-				window.location = \"stock.php\"
+				window.location = \"index.php\"
 			</script>";
 		}
 	         
@@ -71,14 +71,14 @@ if(isset($_POST["delete"])){
 		{
 			echo "<script type=\"text/javascript\">
 					alert(\"Invalid Entry, Try Again !!\");
-					window.location = \"stock.php\"
+					window.location = \"index.php\"
 				  </script>";		
 		}
 		
 		else {
 			  echo "<script type=\"text/javascript\">
 				alert(\"Deleted '".$pname."' from Database permenently !\");
-				window.location = \"stock.php\"
+				window.location = \"index.php\"
 			</script>";
 		}
 	         

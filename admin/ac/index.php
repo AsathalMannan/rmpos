@@ -3,6 +3,15 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
+ ob_start();
+ session_start();
+
+ // if session is not set this will redirect to login page
+ if( !isset($_SESSION['user']) ) {
+  header("Location: ../index.php");
+  exit;
+ }
+
 date_default_timezone_set('Asia/Kolkata');
 $username="root";
 $password="pass123";
@@ -12,10 +21,10 @@ $conn = mysqli_connect("localhost", $username, $password, $database);
 $date = date("Y-m-d");
 $ydate = date("Y-m-d", strtotime("-1 day", strtotime($date)));
 
-$q_tt = "SELECT tt from accounts.`ac` WHERE rdate='".$ydate."'";
-$row_tt = $conn->query($q_tt);
-$f_tt = mysqli_fetch_assoc($row_tt);
-$tt=$f_tt["tt"];
+$q_ytt = "SELECT tt from accounts.`ac` WHERE rdate='".$ydate."'";
+$row_ytt = $conn->query($q_ytt);
+$f_ytt = mysqli_fetch_assoc($row_ytt);
+$ytt=$f_ytt["tt"];
 
 ?>
 <!DOCTYPE html>
@@ -35,10 +44,10 @@ $tt=$f_tt["tt"];
   <!-- Theme style -->
   <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
 
-  <link rel="stylesheet" href="../../dist/css/skins/skin-purple.min.css">
+  <link rel="stylesheet" href="../../dist/css/skins/skin-yellow.min.css">
   <link rel="stylesheet" href="../../rmpos.css">
 
-
+<link href="../../plugins/iCheck/square/square.css" rel="stylesheet">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -48,7 +57,7 @@ $tt=$f_tt["tt"];
   <![endif]-->
 </head>
 
-<body class="hold-transition skin-purple sidebar-mini fixed">
+<body class="hold-transition skin-yellow sidebar-mini fixed">
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -98,7 +107,7 @@ $tt=$f_tt["tt"];
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="../logout.php?logout" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -127,7 +136,7 @@ $tt=$f_tt["tt"];
 
         <li class="header">ADMIN TOOLS</li>
         <li><a href="../stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
-        <li><a href="../salehistory.php"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
+        <li><a href="../salehistory"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
         <li class="active"><a href=""><i class="fa fa-inr"></i> <span>Accounts</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
@@ -142,9 +151,9 @@ $tt=$f_tt["tt"];
     <section class="content">
       <div class="row">
         <div class="col-md-12">
-          <div class="box">
+          <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Accounts</h3>
+              <h3 class="box-title">Accounts Book</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -152,7 +161,7 @@ $tt=$f_tt["tt"];
               </div>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
+            <div class="box-body" style="height: 70vh;">
               <div class="row">
 
                 <div class="col-md-8 border-right">
@@ -184,21 +193,13 @@ $tt=$f_tt["tt"];
                     if ($tdate == $date){
 
                       $query_type = "\"Update\";";
-                        // $q_tt = "SELECT tt from accounts.`ac` WHERE rdate='".$date."'";
-                        // $row_tt = $conn->query($q_tt);
-                        // $f_tt = mysqli_fetch_assoc($row_tt);
-                        // $tt=$f_tt["tt"];
+                        $q_tt = "SELECT tinc,texp,tt from accounts.`ac` WHERE rdate='".$date."'";
+                        $row_tt = $conn->query($q_tt);
+                        $f_tt = mysqli_fetch_assoc($row_tt);
+                        $tt=$f_tt["tt"];
+                        $tinc=$f_tt["tinc"];
+                        $texp=$f_tt["texp"];
 
-                        // $q_tt = "SELECT tinc from accounts.`ac` WHERE rdate='".$date."'";
-                        // $row_tt = $conn->query($q_tt);
-                        // $f_tt = mysqli_fetch_assoc($row_tt);
-                        // $tt=$f_tt["tt"];
-
-                        // $q_tt = "SELECT texp from accounts.`ac` WHERE rdate='".$date."'";
-                        // $row_tt = $conn->query($q_tt);
-                        // $f_tt = mysqli_fetch_assoc($row_tt);
-                        // $tt=$f_tt["tt"];
-                        
                         $q_today = "SELECT name,type,amount FROM accounts.`collection` WHERE rdate='".$date."'";
                         $row_today = $conn->query($q_today);
                         while ($f_today = mysqli_fetch_assoc($row_today)){
@@ -206,18 +207,31 @@ $tt=$f_tt["tt"];
                           $today_type=$f_today["type"];
                           $today_amount=$f_today["amount"];
 
+                          if($today_name == "CASH IN LEDGER" || $today_name == "SALES"){
+                          echo "<tr><td></td><td style='text-transform: uppercase;'>".$today_name."</td><td>".$today_type."</td><td style='font-weight: bold; text-align:right;'>".$today_amount."</td></tr>";
+                          }
+                          else{
                           echo "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td style='text-transform: uppercase;'>".$today_name."</td><td>".$today_type."</td><td style='font-weight: bold; text-align:right;'>".$today_amount."</td></tr>";
+                          }
                         }
                       }
 
-                      else if($yedate == $ydate){
+                      else if($yedate < $date){
                         $query_type = "\"Add\";";
-                        $q_tt = "SELECT tt from accounts.`ac` WHERE rdate='".$ydate."'";
-                        $row_tt = $conn->query($q_tt);
-                        $f_tt = mysqli_fetch_assoc($row_tt);
-                        $tt=$f_tt["tt"];
+                        // SELECT tt from accounts.`ac` ORDER BY rdate DESC LIMIT 1
+                        $q_yett = "SELECT tt from accounts.`ac` ORDER BY rdate DESC LIMIT 1";
+                        $row_yett = $conn->query($q_yett);
+                        $f_yett = mysqli_fetch_assoc($row_yett);
+                        $yett=$f_yett["tt"];
 
-                        echo "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td style='text-transform: uppercase;'>CASH IN LEDGER</td><td>In Ledger</td><td style='font-weight: bold; text-align:right;'>".$tt."</td></tr>";
+                        $q_tssum = "SELECT SUM(gtotal) AS tssum from billdb.`billtb` WHERE bdate='".$date."'";
+                        $row_tssum = $conn->query($q_tssum);
+                        $f_tssum = mysqli_fetch_assoc($row_tssum);
+                        $tssum=$f_tssum["tssum"];
+
+                        echo "<tr><td></td><td style='text-transform: uppercase;'>CASH IN LEDGER</td><td>In Ledger</td><td style='font-weight: bold; text-align:right;'>".$yett."</td></tr>";
+                        if($tssum === NULL){$tssum = 0;}
+                        echo "<tr><td></td><td style='text-transform: uppercase;'>SALES</td><td>Income</td><td style='font-weight: bold; text-align:right;'>".$tssum."</td></tr>";
                       }
               ?>
                     
@@ -244,7 +258,7 @@ $tt=$f_tt["tt"];
                       <div class="form-group">
                         <label for="typeoption1" class="col-sm-2 control-label">Type</label>
 
-                        <div class="col-sm-10">
+                        <div class="col-sm-5">
                           <div class="radio">
                             <label>
                               <input type="radio" name="Type" id="typeoption1" value="Income">
@@ -254,7 +268,21 @@ $tt=$f_tt["tt"];
                           <div class="radio">
                             <label>
                               <input type="radio" name="Type" id="typeoption2" value="Expenditure">
-                              Expenditure
+                              Expenses
+                            </label>
+                          </div>
+                          </div>
+                          <div class="col-sm-5">
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="Type" id="typeoption3" value="Out Cash">
+                              Out Cash
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="Type" id="typeoption4" value="Out Cash">
+                              Purchase
                             </label>
                           </div>
                         </div>
@@ -262,7 +290,7 @@ $tt=$f_tt["tt"];
                       <div class="form-group">
                         <label for="amount" class="col-sm-2 control-label">Amount</label>
 
-                        <div class="col-sm-12">
+                        <div class="col-sm-10">
                           <div class="input-group">
                             <span class="input-group-addon">₹</span>
                             <input id="amount" type="text" class="form-control" autocomplete="off">
@@ -274,10 +302,16 @@ $tt=$f_tt["tt"];
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                      <button type="reset" class="btn btn-warning">Reset</button>
-                      <button id="add-entry" type="button" class="btn btn-success pull-right">Add</button>
-                      <button id="" type="button" class="btn btn-primary clickable" onclick="senditems();"">
-                      <?php if($tdate == $date){echo "Update";} else {echo "Add";} ?></button>
+                      <div class="btn-group" role="group" aria-label="Basic example">
+                        <button id="add-entry" type="button" class="btn btn-success">Add</button>
+                        <button type="reset" class="btn bg-blue">Reset</button>
+                      </div>
+                      <div class="btn-group pull-right" role="group" aria-label="Basic example">
+                        <button id="" type="button" class="btn bg-navy clickable" onclick="senditems();">
+                        <?php if($tdate == $date){echo "Update";} else {echo "Save";} ?></button>
+                        <?php if($tdate == $date){
+                          echo "<button type=\"button\" class=\"btn bg-navy updateable\" onclick=\"senditems();\">Load Sales</button>"; } ?>
+                      </div>
                     </div>
                     <!-- /.box-footer -->
                   </form>
@@ -291,16 +325,18 @@ $tt=$f_tt["tt"];
               <div class="row">
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
-                    <h5 class="description-header">₹ <span>0</span></h5>
+                    <h5 class="description-header">₹ <span>
+                    <?php if($ytt === NULL){ echo"0"; } else{ echo $ytt; } ?></span></h5>
                     <span class="description-text">Cash in ledger</span>
-                    <text class="description-text">- Yesterday</text>
+                    <text class="description-text">- Previous</text>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
-                    <h5 class="description-header text-blue"><strong>₹ <span id="Total">0</span></strong></h5>
+                    <h5 class="description-header text-blue"><strong>₹ <span id="Total">
+                    <?php if($tdate == $date){ echo $tt; } else{ echo "0"; } ?></span></strong></h5>
                     <span class="description-text">Cash in ledger</span>
                     <text class="description-text text-primary">- Today</text>
                   </div>
@@ -309,7 +345,8 @@ $tt=$f_tt["tt"];
                 <!-- /.col -->
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
-                    <h5 class="description-header text-green"><strong>₹ <span id="inc">0</span></strong></h5>
+                    <h5 class="description-header text-green"><strong>₹ <span id="inc">
+                    <?php if($tdate == $date){ echo $tinc; } else{ echo "0"; } ?></span></strong></h5>
                     <span class="description-text">Total Income</span>
                   </div>
                   <!-- /.description-block -->
@@ -317,7 +354,8 @@ $tt=$f_tt["tt"];
                 <!-- /.col -->
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block">
-                    <h5 class="description-header text-red"><strong>₹ <span id="exp">0</span></strong></h5>
+                    <h5 class="description-header text-red"><strong>₹ <span id="exp">
+                    <?php if($tdate == $date){ echo $texp; } else{ echo "0"; } ?></span></strong></h5>
                     <span class="description-text">Expenditure</span>
                   </div>
                   <!-- /.description-block -->
@@ -326,38 +364,6 @@ $tt=$f_tt["tt"];
               <!-- /.row -->
             </div>
             <!-- /.box-footer -->
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-
-        <div class="col-md-6">
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Chart</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="row">
-                <div class="col-md-6">
-                  <p class="text-center">
-                    <strong>Sales Report: <?php echo date('M'); ?></strong>
-                  </p>
-                  
-
-                  
-                </div>
-                <!-- /.col -->
-               
-              </div>
-              <!-- /.row -->
-            </div>
-            <!-- ./box-body -->
           </div>
           <!-- /.box -->
         </div>
@@ -376,7 +382,7 @@ $tt=$f_tt["tt"];
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 2.2.3 -->
-<script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../../plugins/jQuery/jquery-3.2.1.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="../../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
@@ -389,6 +395,9 @@ $tt=$f_tt["tt"];
 <script type="text/javascript" src="../../plugins/moment/moment.min.js"></script>
 
 <script type="text/javascript" src="../../plugins/chartjs/chart.min.js"></script>
+
+
+<script src="../../plugins/iCheck/icheck.js"></script>
 
 <script type="text/javascript">
 var type;
@@ -487,6 +496,41 @@ $(".clickable").click(function() {
                     }
                 });
             });
+
+<?php if($tdate == $date){ ?>
+$(".updateable").click(function() {
+                //alert($(this).attr('id'));
+            <?php
+               $q_tssum = "SELECT SUM(gtotal) AS tssum from billdb.`billtb` WHERE bdate='".$date."'";
+                        $row_tssum = $conn->query($q_tssum);
+                        $f_tssum = mysqli_fetch_assoc($row_tssum);
+                        $tssum=$f_tssum["tssum"]; ?>
+
+              var tssum = <?php echo $tssum ?>;
+              var ac = document.getElementById('ac');
+              ac.rows[2].cells[3].innerHTML = tssum;
+            });
+<?php
+}
+?>
+
+$(document).ready( function () {
+  var ac = document.getElementById('ac');
+  var td = document.querySelectorAll('#ac > tbody > tr > td:first-child');
+  var tt1 = document.querySelectorAll('#ac > tbody > tr > td:nth-child(1)');
+  var tt2 = document.querySelectorAll('#ac > tbody > tr > td:nth-child(2)');
+
+  $(ac.rows[1].cells[1]).find('')
+
+  });
+
+$(document).ready(function(){
+  $('input').iCheck({
+    checkboxClass: 'icheckbox_square',
+    radioClass: 'iradio_square',
+    increaseArea: '20%' // optional
+  });
+});
 </script>
 
 </body>

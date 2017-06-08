@@ -3,6 +3,15 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
+ ob_start();
+ session_start();
+
+ // if session is not set this will redirect to login page
+ if( !isset($_SESSION['user']) ) {
+  header("Location: ../index.php");
+  exit;
+ }
+
 include 'sale.php';
 
 date_default_timezone_set('Asia/Kolkata');
@@ -95,7 +104,7 @@ $conn = mysqli_connect("localhost", $username, $password, $database);
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="../logout.php?logout" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -124,7 +133,7 @@ $conn = mysqli_connect("localhost", $username, $password, $database);
 
         <li class="header">ADMIN TOOLS</li>
         <li><a href="../stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
-        <li><a href="../salehistory.php"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
+        <li><a href="../salehistory"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
         <li><a href="../ac"><i class="fa fa-inr"></i> <span>Accounts</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->

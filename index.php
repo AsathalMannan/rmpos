@@ -25,7 +25,7 @@ header("Pragma: no-cache");
   -->
   <link rel="stylesheet" href="dist/css/skins/skin-purple.min.css">
   <link rel="stylesheet" href="rmpos.css">
-  <link rel="stylesheet" href="plugins/animate.css">
+  <link rel="stylesheet" href="plugins/animate/animate.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -109,13 +109,13 @@ header("Pragma: no-cache");
 
         <li class="header">DASHBOARD</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="admin/board"><i class="fa fa-info"></i> <span>Stock Info</span></a></li>
-        <li><a href="admin/saleb"><i class="fa fa-area-chart"></i> <span>Sales Info</span></a></li>
+        <li><a href="admin?stockinfo"><i class="fa fa-info"></i> <span>Stock Info</span></a></li>
+        <li><a href="admin?salesinfo"><i class="fa fa-area-chart"></i> <span>Sales Info</span></a></li>
 
         <li class="header">ADMIN TOOLS</li>
-        <li><a href="admin/stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
-        <li><a href="admin/salehistory.php"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
-        <li><a href="admin/ac"><i class="fa fa-inr"></i> <span>Accounts</span></a></li>
+        <li><a href="admin?stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
+        <li><a href="admin?salehistory"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
+        <li><a href="admin?accounts"><i class="fa fa-inr"></i> <span>Accounts</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -242,7 +242,7 @@ header("Pragma: no-cache");
 
               <div class="box-footer">
                 <button type="submit" class="btn btn-success clickable" onclick="senditems();">Pay</button>
-                <button type="submit" class="btn btn-danger">Cancel Bill</button>
+                <button type="submit" class="btn btn-danger pull-right">Cancel Bill</button>
               </div>
             
           </div>
@@ -414,8 +414,8 @@ $(".clickable").click(function() {
                     success: function(data)
                     {
                       $.notify({
-                          title: '<strong>Heads up!</strong>',
-                          message: 'You can use any of bootstraps other alert styles as well by default.',
+                          title: '<strong>Success!</strong>',
+                          message: 'The bill successfully generated and printed.',
                           animate: {
                               enter: 'animated flipInY',
                               exit: 'animated flipOutX'
@@ -423,9 +423,7 @@ $(".clickable").click(function() {
                         },{
                           type: 'success'
                         });
-                      setTimeout(function(){
-                      location.reload(true); // then reload the page.(3)
-                      }, 5000);
+                      $("#cart-tb > tbody > tr").remove();
                     }
                 });
             });

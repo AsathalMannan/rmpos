@@ -21,34 +21,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect.
   -->
-  <link rel="stylesheet" href="../dist/css/skins/skin-purple.min.css">
-  <link rel="stylesheet" href="../rmpos.css">
+  <link rel="stylesheet" href="dist/css/skins/skin-purple.min.css">
+  <link rel="stylesheet" href="rmpos.css">
 
   <!-- Datatables -->
   <!-- <link rel="stylesheet" type="text/css" href="../DataTables/Bootstrap-3.3.7/css/bootstrap.min.css"/> -->
-  <link rel="stylesheet" type="text/css" href="../DataTables/DataTables-1.10.15/css/dataTables.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/AutoFill-2.2.0/css/autoFill.bootstrap.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/Buttons-1.3.1/css/buttons.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/ColReorder-1.3.3/css/colReorder.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/FixedColumns-3.2.2/css/fixedColumns.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/FixedHeader-3.1.2/css/fixedHeader.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/KeyTable-2.2.1/css/keyTable.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/Responsive-2.1.1/css/responsive.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/RowGroup-1.0.0/css/rowGroup.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/RowReorder-1.2.0/css/rowReorder.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/Scroller-1.4.2/css/scroller.bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="../DataTables/Select-1.2.2/css/select.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="DataTables/DataTables-1.10.15/css/dataTables.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="DataTables/AutoFill-2.2.0/css/autoFill.bootstrap.css"/>
+  <link rel="stylesheet" type="text/css" href="DataTables/Buttons-1.3.1/css/buttons.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="DataTables/ColReorder-1.3.3/css/colReorder.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="DataTables/FixedColumns-3.2.2/css/fixedColumns.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="DataTables/FixedHeader-3.1.2/css/fixedHeader.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="DataTables/KeyTable-2.2.1/css/keyTable.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="DataTables/Responsive-2.1.1/css/responsive.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="DataTables/RowGroup-1.0.0/css/rowGroup.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="DataTables/RowReorder-1.2.0/css/rowReorder.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="DataTables/Scroller-1.4.2/css/scroller.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="DataTables/Select-1.2.2/css/select.bootstrap.min.css"/>
   <!-- /Datatables-->
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

@@ -1,0 +1,17 @@
+<convert2exe>
+    <path>D:\rmpos\app\rmpos.exe</path>
+    <uacLevel>asInvoker</uacLevel>
+    <icon>C:\Users\Haider\Desktop\favicon.ico</icon>
+    <userAccount></userAccount>
+    <password>072046</password>
+    <mode>cscript</mode>
+    <silent>no</silent>
+    <unicode>no</unicode>
+    <build>64bit</build>
+    <details>
+        <version>1.0.0.0</version>
+        <description>RMPOS v1.0</description>
+        <productName>Rahman Mobiles - POS Software</productName>
+        <copyright>Copyright (C) 2017</copyright>
+    </details>
+</convert2exe>

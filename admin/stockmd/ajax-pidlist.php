@@ -40,9 +40,7 @@ if(!empty($result)) {
 <?php
 foreach($result as $pid) {
 ?>
-<!-- <li onClick="selectpid('<?php echo $pid["pno"]; ?>');" class="custom-li"><?php echo $pid["pno"];?>
-	<span class="pull-right"><?php echo $pid["pname"]; ?></span>
-</li> -->
+
 <li onClick="selectpid('<?php echo $pid["pno"]; ?>');
 		selectpname('<?php echo $pid["pname"]; ?>');
 		selectcate('<?php echo $pid["category"]; ?>');

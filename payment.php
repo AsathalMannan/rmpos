@@ -50,7 +50,7 @@ $row_billtb = $conn->query($q_in_billtb);
 $q_insert = "INSERT INTO saletb (`billno`, `pid`, `pname`, `category`, `price`, `adate`) VALUES ('".$billno."','".$pno."','".$pname."','".$category."','".$price."','".$adate."')";
 $result1 = mysqli_query($conn, $q_insert);
 
-$items[] = new item($pname , $price) ;
+$items[] = new item($pno."-".$pname , $price) ;
 
 
 

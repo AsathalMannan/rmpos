@@ -23,14 +23,14 @@ $con = mysqli_connect("localhost", $username, $password, $database);
 				{
 					echo "<script type=\"text/javascript\">
 							alert(\"Invalid File:Please Upload CSV File.\");
-							window.location = \"stock.php\"
+							window.location = \"index.php\"
 						  </script>";		
 				}
 				
 				else {
 					  echo "<script type=\"text/javascript\">
 						alert(\"CSV File has been successfully Imported.\");
-						window.location = \"stock.php\"
+						window.location = \"index.php\"
 					</script>";
 				}
 	         }
@@ -42,7 +42,7 @@ $con = mysqli_connect("localhost", $username, $password, $database);
 if(!isset($_POST["Import"])){
 	echo "<script type=\"text/javascript\">
 			alert(\"Invalid File: Please Select file.\");
-			window.location = \"stock.php\"
+			window.location = \"index.php\"
 		  </script>";
 }	 
 
