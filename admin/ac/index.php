@@ -267,7 +267,7 @@ $ytt=$f_ytt["tt"];
                           </div>
                           <div class="radio">
                             <label>
-                              <input type="radio" name="Type" id="typeoption2" value="Expenditure">
+                              <input type="radio" name="Type" id="typeoption2" value="Expenses">
                               Expenses
                             </label>
                           </div>
@@ -281,7 +281,7 @@ $ytt=$f_ytt["tt"];
                           </div>
                           <div class="radio">
                             <label>
-                              <input type="radio" name="Type" id="typeoption4" value="Out Cash">
+                              <input type="radio" name="Type" id="typeoption4" value="Purchase">
                               Purchase
                             </label>
                           </div>
@@ -410,6 +410,12 @@ $(document).ready(function(){
             else if (document.getElementById('typeoption2').checked) {
               type = document.getElementById('typeoption2').value;
             }
+            else if (document.getElementById('typeoption3').checked) {
+              type = document.getElementById('typeoption3').value;
+            }
+            else if (document.getElementById('typeoption4').checked) {
+              type = document.getElementById('typeoption4').value;
+            }
             var amount = $("#amount").val();
 
             var markup = "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td style='text-transform: uppercase;'>" + name + "</td><td>" + type + "</td><td style='font-weight: bold; float: right;'>" + amount +"</td></tr>";
@@ -419,7 +425,11 @@ $(document).ready(function(){
 
 var total=0, inc=0, exp=0;
 var j=1;
-$('#ac tbody').on("DOMSubtreeModified", function(){
+
+$('#ac tbody').on("DOMSubtreeModified", function(){ tablepopulate();});
+$(document).ready(function() { tablepopulate(); });
+
+function tablepopulate(){
     var td = document.querySelectorAll('#ac > tbody > tr > td:last-child');
     var tt = document.querySelectorAll('#ac > tbody > tr > td:nth-child(3)');
     var typevalue = String(type);
@@ -434,11 +444,13 @@ $('#ac tbody').on("DOMSubtreeModified", function(){
       if(value == "Income") {
           inc += parseInt(td[i].innerText);
           total += parseInt(td[i].innerText);
-      } else if(value == "Expenditure") {
+      } else if(value == "Expenses") {
           exp += parseInt(td[i].innerText);
           total = total - parseInt(td[i].innerText);
       } else if(value == "In Ledger"){
           total += parseInt(td[i].innerText);
+      } else if(value == "Out Cash"){
+          total -= parseInt(td[i].innerText);
       }
     }
 
@@ -447,8 +459,7 @@ document.getElementById('exp').innerText = exp;
 document.getElementById('inc').innerText = inc; 
 
 $('.form-group').find('input:text').val('');
-    
-});
+}
 
 $('#ac').on('click', '#delete-row', function(){
     $(this).closest ('tr').remove ();
