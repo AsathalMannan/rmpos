@@ -13,6 +13,8 @@ else if(isset($_GET["salehistory"])){
   $loc = "salehistory/";}
 else if(isset($_GET["accounts"])){
   $loc = "ac/";}
+else if(isset($_GET["binfo"])){
+  $loc = "binfo/";}
 else{
   $loc = "board/";
 }

@@ -12,7 +12,7 @@ header("Pragma: no-cache");
   exit;
  }
 
-include 'sale.php';
+// include 'sale.php';
 
 date_default_timezone_set('Asia/Kolkata');
 $username="root";
@@ -41,7 +41,7 @@ $conn = mysqli_connect("localhost", $username, $password, $database);
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect.
   -->
-  <link rel="stylesheet" href="../../dist/css/skins/skin-purple.min.css">
+  <link rel="stylesheet" href="../../dist/css/skins/skin-yellow.min.css">
   <link rel="stylesheet" href="../../rmpos.css">
 
 
@@ -54,7 +54,7 @@ $conn = mysqli_connect("localhost", $username, $password, $database);
   <![endif]-->
 </head>
 
-<body class="hold-transition skin-purple sidebar-mini fixed">
+<body class="hold-transition skin-yellow sidebar-mini fixed">
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -129,8 +129,8 @@ $conn = mysqli_connect("localhost", $username, $password, $database);
         <li class="header">DASHBOARD</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="../board"><i class="fa fa-info"></i> <span>Stock Info</span></a></li>
-        <li class="active"><a href=""><i class="fa fa-area-chart"></i> <span>Sales Info</span></a></li>
-        <li><a href="../binfo"><i class="fa fa-briefcase"></i> <span>Business Info</span></a></li>
+        <li><a href="../saleb"><i class="fa fa-area-chart"></i> <span>Sales Info</span></a></li>
+        <li class="active"><a href=""><i class="fa fa-briefcase"></i> <span>Business Info</span></a></li>
 
         <li class="header">ADMIN TOOLS</li>
         <li><a href="../stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
@@ -187,38 +187,6 @@ $conn = mysqli_connect("localhost", $username, $password, $database);
           <!-- /.box -->
         </div>
         <!-- /.col -->
-
-        <div class="col-md-6">
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Chart</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="row">
-                <div class="col-md-6">
-                  <p class="text-center">
-                    <strong>Sales Report: <?php echo date('M'); ?></strong>
-                  </p>
-                  
-
-                  
-                </div>
-                <!-- /.col -->
-               
-              </div>
-              <!-- /.row -->
-            </div>
-            <!-- ./box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
       
 
       </div>
@@ -257,7 +225,7 @@ var options = {
   data: {
     // labels: ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
     labels: [<?php
-$M = date("M"); $d = date("d"); 
+  $M = date("M"); $d = date("d"); 
   $date = "01-".$M;
   $end_date = "31-".$M;
 
@@ -270,7 +238,7 @@ $M = date("M"); $d = date("d");
 ?>],
     datasets: [
       {
-        label: 'Sales',
+        label: 'Income',
         data: [<?php 
           $m = date("m"); $d = date("d"); $y = date("y"); 
           $date1 = $y."-".$m."-01";
@@ -278,21 +246,54 @@ $M = date("M"); $d = date("d");
 
           while (strtotime($date1) <= strtotime($end_date1)) {
                       
-          $q_salecount = "SELECT count(billno) as salecount from billdb.billtb WHERE bdate='".$date1."'";
-          $row_salecount = $conn->query($q_salecount);
-          $f_salecount = mysqli_fetch_assoc($row_salecount);
-          $salecount=$f_salecount["salecount"];
+          $q_tinc = "SELECT tinc from accounts.ac WHERE rdate='".$date1."'";
+          $row_tinc = $conn->query($q_tinc);
+          $f_tinc = mysqli_fetch_assoc($row_tinc);
+          $tinc=$f_tinc["tinc"];
 
-          echo $salecount.",";  
+          if($tinc === NULL)
+            echo "0,";
+          else{
+            echo $tinc.",";  
+          }
 
           $date1 = date ("y-m-d", strtotime("+1 day", strtotime($date1)));
           }
 
           ?>],
         borderWidth: 3,
+        fill: +1,
+        backgroundColor: "rgba(20, 173, 51, 0.54)",
+        borderColor: "#14ad33"
+
+      },{
+        label: 'Expenses',
+        data: [<?php 
+          $m = date("m"); $d = date("d"); $y = date("y"); 
+          $date2 = $y."-".$m."-01";
+           $end_date2 = $y."-".$m."-31";
+
+          while (strtotime($date2) <= strtotime($end_date2)) {
+                      
+          $q_texp = "SELECT texp from accounts.ac WHERE rdate='".$date2."'";
+          $row_texp = $conn->query($q_texp);
+          $f_texp = mysqli_fetch_assoc($row_texp);
+          $texp=$f_texp["texp"];
+
+          if($texp === NULL)
+            echo "0,";
+          else{
+            echo $texp.",";  
+          }
+
+          $date2 = date ("y-m-d", strtotime("+1 day", strtotime($date2)));
+          }
+
+          ?>],
+        borderWidth: 3,
         fill: true,
-        backgroundColor: "#CDDC39 ",
-        borderColor: "#AFB42B"
+        backgroundColor: "rgba(173, 20, 20, 0.54)",
+        borderColor: "#ad1414"
       }
     ]
   },
@@ -319,15 +320,15 @@ $M = date("M"); $d = date("d");
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: 'No of Sales'
+                            labelString: 'Amount (₹)'
                         },
-                        ticks: {
+                        // ticks: {
                             
-                            beginAtZero: true,
-                            steps: 5,
-                            stepValue: 5,   
-                            max: 10
-                        }
+                        //     beginAtZero: true,
+                        //     steps: 5,
+                        //     stepValue: 5,   
+                        //     max: 20
+                        // }
                     }]
                 },
                 maintainAspectRatio: true
@@ -336,7 +337,7 @@ $M = date("M"); $d = date("d");
 }
 
 var ctx = document.getElementById('line-chart').getContext('2d');
-ctx.canvas.height = 50;
+// ctx.canvas.height = 50;
 new Chart(ctx, options);
 </script>
 

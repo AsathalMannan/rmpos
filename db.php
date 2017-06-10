@@ -151,6 +151,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Optionally, you can add icons to the links -->
         <li><a href="admin/board"><i class="fa fa-info"></i> <span>Stock Info</span></a></li>
         <li><a href="admin/saleb"><i class="fa fa-area-chart"></i> <span>Sales Info</span></a></li>
+        <li><a href="admin?binfo"><i class="fa fa-briefcase"></i> <span>Business Info</span></a></li>
 
         <li class="header">ADMIN TOOLS</li>
         <li><a href="admin/stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>

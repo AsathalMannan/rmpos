@@ -133,6 +133,7 @@ $ytt=$f_ytt["tt"];
         <!-- Optionally, you can add icons to the links -->
         <li><a href="../board"><i class="fa fa-info"></i> <span>Stock Info</span></a></li>
         <li><a href="../saleb"><i class="fa fa-area-chart"></i> <span>Sales Info</span></a></li>
+        <li><a href="../binfo"><i class="fa fa-briefcase"></i> <span>Business Info</span></a></li>
 
         <li class="header">ADMIN TOOLS</li>
         <li><a href="../stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
