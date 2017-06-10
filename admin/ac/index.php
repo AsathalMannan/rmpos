@@ -21,7 +21,7 @@ $conn = mysqli_connect("localhost", $username, $password, $database);
 $date = date("Y-m-d");
 $ydate = date("Y-m-d", strtotime("-1 day", strtotime($date)));
 
-$q_ytt = "SELECT tt from accounts.`ac` WHERE rdate='".$ydate."'";
+$q_ytt = "SELECT tt from accounts.`ac` ORDER BY rdate DESC LIMIT 1";
 $row_ytt = $conn->query($q_ytt);
 $f_ytt = mysqli_fetch_assoc($row_ytt);
 $ytt=$f_ytt["tt"];
@@ -396,6 +396,7 @@ $ytt=$f_ytt["tt"];
 
 <script type="text/javascript" src="../../plugins/chartjs/chart.min.js"></script>
 
+<script type="text/javascript" src="../../plugins/select2/i18n/select2.full.min.js"></script>
 
 <script src="../../plugins/iCheck/icheck.js"></script>
 
