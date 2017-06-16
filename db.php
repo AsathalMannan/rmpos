@@ -1,4 +1,27 @@
 <?php
+
+
+ob_start();
+session_start();
+
+ if( isset($_SESSION['user']) ) {
+
+  $username="root";
+  $password="pass123";
+  $database="stock";
+  $conn = mysqli_connect("localhost", $username, $password, $database);
+
+  $uid = $_SESSION['user'];
+
+  $q_user = "SELECT name,role from userdb.users WHERE uname='".$uid."'";
+            $row_user = $conn->query($q_user);
+            $f_user = mysqli_fetch_assoc($row_user);
+            $name=$f_user["name"];
+            $role=$f_user["role"];
+
+          }
+
+
 $username="root";
 $password="pass123";
 $database="stock";
@@ -23,9 +46,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="plugins/font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="plugins/ionicons-2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -107,26 +130,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <!-- The user image in the navbar-->
               <img src="../dist/img/myAvatar.png" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Admin</span>
+              <span class="hidden-xs"><?php if( isset($_SESSION['user']) ) { echo $name;} else{echo "User";} ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="../dist/img/myAvatar.png" class="img-circle" alt="User Image">
+                <img src="dist/img/myAvatar.png" class="img-circle" alt="User Image">
 
                 <p>
-                  Admin
-                  <small>Full Access</small>
+                  <?php if( isset($_SESSION['user']) ) { echo $name;} else{echo "User";} ?>
+                  <small><?php if( isset($_SESSION['user']) ) { echo $role;} else{echo "Staff";} ?></small>
                 </p>
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div>
-                <div class="pull-right">
-                  <a href="../logout.php?logout" class="btn btn-default btn-flat">Sign out</a>
-                </div>
+                <?php
+                if( isset($_SESSION['user']) ) {
+                echo "<div class=\"pull-left\">
+                                  <a href=\"#\" class=\"btn btn-default btn-flat\">Profile</a>
+                                </div>
+                                <div class=\"pull-right\">
+                                  <a href=\"admin/logout.php?logout\" class=\"btn btn-default btn-flat\">Sign out</a>
+                                </div>"; }
+
+                ?>
               </li>
             </ul>
           </li>
@@ -145,18 +172,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <li class="header">MENU</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="../"><i class="fa fa-cart-plus"></i> <span>Cart</span></a></li>
+        <li><a href="service.php"><i class="fa fa-wrench"></i> <span>Services</span></a></li>
         <li class="active"><a href="#"><i class="fa fa-book"></i> <span>Stock Book</span></a></li>
+        <li><a href="ac"><i class="fa fa-inr"></i> <span>Accounts</span></a></li>
 
         <li class="header">DASHBOARD</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="admin/board"><i class="fa fa-info"></i> <span>Stock Info</span></a></li>
-        <li><a href="admin/saleb"><i class="fa fa-area-chart"></i> <span>Sales Info</span></a></li>
+        <li><a href="admin?stockinfo"><i class="fa fa-info"></i> <span>Stock Info</span></a></li>
+        <li><a href="admin?salesinfo"><i class="fa fa-area-chart"></i> <span>Sales Info</span></a></li>
         <li><a href="admin?binfo"><i class="fa fa-briefcase"></i> <span>Business Info</span></a></li>
 
         <li class="header">ADMIN TOOLS</li>
-        <li><a href="admin/stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
-        <li><a href="admin/salehistory.php"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
-        <li><a href="admin/ac"><i class="fa fa-inr"></i> <span>Accounts</span></a></li>
+        <li><a href="admin?stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
+        <li><a href="admin?salehistory"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

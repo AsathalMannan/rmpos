@@ -3,20 +3,26 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
- ob_start();
- session_start();
-
- // if session is not set this will redirect to login page
- if( !isset($_SESSION['user']) ) {
-  header("Location: ../index.php");
-  exit;
- }
-
 date_default_timezone_set('Asia/Kolkata');
 $username="root";
 $password="pass123";
 $database="stock";
 $conn = mysqli_connect("localhost", $username, $password, $database);
+
+ ob_start();
+ session_start();
+
+ if( isset($_SESSION['user']) ) {
+
+  $uid = $_SESSION['user'];
+
+  $q_user = "SELECT name,role from userdb.users WHERE uname='".$uid."'";
+            $row_user = $conn->query($q_user);
+            $f_user = mysqli_fetch_assoc($row_user);
+            $name=$f_user["name"];
+            $role=$f_user["role"];
+
+}
 
 $date = date("Y-m-d");
 $ydate = date("Y-m-d", strtotime("-1 day", strtotime($date)));
@@ -36,18 +42,18 @@ $ytt=$f_ytt["tt"];
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../plugins/font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../plugins/ionicons-2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
 
-  <link rel="stylesheet" href="../../dist/css/skins/skin-yellow.min.css">
-  <link rel="stylesheet" href="../../rmpos.css">
+  <link rel="stylesheet" href="../dist/css/skins/skin-purple.min.css">
+  <link rel="stylesheet" href="../rmpos.css">
 
-<link href="../../plugins/iCheck/square/square.css" rel="stylesheet">
+<link href="../plugins/iCheck/square/square.css" rel="stylesheet">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -57,7 +63,7 @@ $ytt=$f_ytt["tt"];
   <![endif]-->
 </head>
 
-<body class="hold-transition skin-yellow sidebar-mini fixed">
+<body class="hold-transition skin-purple sidebar-mini fixed">
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -87,28 +93,32 @@ $ytt=$f_ytt["tt"];
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="../../dist/img/myAvatar.png" class="user-image" alt="User Image">
+              <img src="../dist/img/myAvatar.png" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Admin</span>
+              <span class="hidden-xs"><?php if( isset($_SESSION['user']) ) { echo $name;} else{echo "User";} ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="../../dist/img/myAvatar.png" class="img-circle" alt="User Image">
+                <img src="../dist/img/myAvatar.png" class="img-circle" alt="User Image">
 
                 <p>
-                  Admin
-                  <small>Full Access</small>
+                  <?php if( isset($_SESSION['user']) ) { echo $name;} else{echo "User";} ?>
+                  <small><?php if( isset($_SESSION['user']) ) { echo $role;} else{echo "Staff";} ?></small>
                 </p>
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div>
-                <div class="pull-right">
-                  <a href="../logout.php?logout" class="btn btn-default btn-flat">Sign out</a>
-                </div>
+              <?php
+                if( isset($_SESSION['user']) ) {
+                echo "<div class=\"pull-left\">
+                                  <a href=\"#\" class=\"btn btn-default btn-flat\">Profile</a>
+                                </div>
+                                <div class=\"pull-right\">
+                                  <a href=\"../admin/logout.php?logout\" class=\"btn btn-default btn-flat\">Sign out</a>
+                                </div>"; }
+
+                ?>
               </li>
             </ul>
           </li>
@@ -127,18 +137,20 @@ $ytt=$f_ytt["tt"];
         <li class="header">MENU</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="//rmpos.app"><i class="fa fa-cart-plus"></i> <span>Cart</span></a></li>
-        <li><a href="../../db.php"><i class="fa fa-book"></i> <span>Stock Book</span></a></li>
+        <li><a href="../service.php"><i class="fa fa-wrench"></i> <span>Services</span></a></li>
+        <li><a href="../db.php"><i class="fa fa-book"></i> <span>Stock Book</span></a></li>
+        <li class="active"><a href=""><i class="fa fa-inr"></i> <span>Accounts</span></a></li>
 
         <li class="header">DASHBOARD</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="../board"><i class="fa fa-info"></i> <span>Stock Info</span></a></li>
-        <li><a href="../saleb"><i class="fa fa-area-chart"></i> <span>Sales Info</span></a></li>
-        <li><a href="../binfo"><i class="fa fa-briefcase"></i> <span>Business Info</span></a></li>
+        <li><a href="../admin?stockinfo"><i class="fa fa-info"></i> <span>Stock Info</span></a></li>
+        <li><a href="../admin?salesinfo"><i class="fa fa-area-chart"></i> <span>Sales Info</span></a></li>
+        <li><a href="../admin?binfo"><i class="fa fa-briefcase"></i> <span>Business Info</span></a></li>
 
         <li class="header">ADMIN TOOLS</li>
-        <li><a href="../stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
-        <li><a href="../salehistory"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
-        <li class="active"><a href=""><i class="fa fa-inr"></i> <span>Accounts</span></a></li>
+        <li><a href="../admin?stockmd"><i class="fa fa-database"></i> <span>Stock Management</span></a></li>
+        <li><a href="../admin?salehistory"><i class="fa fa-history"></i> <span>Sales History</span></a></li>
+        
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -208,7 +220,7 @@ $ytt=$f_ytt["tt"];
                           $today_type=$f_today["type"];
                           $today_amount=$f_today["amount"];
 
-                          if($today_name == "CASH IN LEDGER" || $today_name == "SALES"){
+                          if($today_name == "CASH IN LEDGER" || $today_name == "SALES" || $today_name == "SERVICES"){
                           echo "<tr><td></td><td style='text-transform: uppercase;'>".$today_name."</td><td>".$today_type."</td><td style='font-weight: bold; text-align:right;'>".$today_amount."</td></tr>";
                           }
                           else{
@@ -230,9 +242,16 @@ $ytt=$f_ytt["tt"];
                         $f_tssum = mysqli_fetch_assoc($row_tssum);
                         $tssum=$f_tssum["tssum"];
 
+                        $q_tserv = "SELECT SUM(amount) AS tserv from service_db.`servicetb` WHERE sdate='".$date."'";
+                        $row_tserv = $conn->query($q_tserv);
+                        $f_tserv = mysqli_fetch_assoc($row_tserv);
+                        $tserv=$f_tserv["tserv"];
+
                         echo "<tr><td></td><td style='text-transform: uppercase;'>CASH IN LEDGER</td><td>In Ledger</td><td style='font-weight: bold; text-align:right;'>".$yett."</td></tr>";
                         if($tssum === NULL){$tssum = 0;}
                         echo "<tr><td></td><td style='text-transform: uppercase;'>SALES</td><td>Income</td><td style='font-weight: bold; text-align:right;'>".$tssum."</td></tr>";
+                        if($tserv === NULL){$tserv = 0;}
+                        echo "<tr><td></td><td style='text-transform: uppercase;'>SERVICES</td><td>Income</td><td style='font-weight: bold; text-align:right;'>".$tserv."</td></tr>";
                       }
               ?>
                     
@@ -282,7 +301,7 @@ $ytt=$f_ytt["tt"];
                           </div>
                           <div class="radio">
                             <label>
-                              <input type="radio" name="Type" id="typeoption4" value="Purchase">
+                              <input type="radio" name="Type" id="typeoption4" value="Purchase" disabled>
                               Purchase
                             </label>
                           </div>
@@ -310,8 +329,6 @@ $ytt=$f_ytt["tt"];
                       <div class="btn-group pull-right" role="group" aria-label="Basic example">
                         <button id="" type="button" class="btn bg-navy clickable" onclick="senditems();">
                         <?php if($tdate == $date){echo "Update";} else {echo "Save";} ?></button>
-                        <?php if($tdate == $date){
-                          echo "<button type=\"button\" class=\"btn bg-navy updateable\" onclick=\"senditems();\">Load Sales</button>"; } ?>
                       </div>
                     </div>
                     <!-- /.box-footer -->
@@ -383,23 +400,23 @@ $ytt=$f_ytt["tt"];
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 2.2.3 -->
-<script src="../../plugins/jQuery/jquery-3.2.1.min.js"></script>
+<script src="../plugins/jQuery/jquery-3.2.1.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="../../bootstrap/js/bootstrap.min.js"></script>
+<script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../../dist/js/app.min.js"></script>
+<script src="../dist/js/app.min.js"></script>
 
-<script type="text/javascript" src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script type="text/javascript" src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
 
-<script type="text/javascript" src="../../plugins/fastclick/fastclick.min.js"></script>
+<script type="text/javascript" src="../plugins/fastclick/fastclick.min.js"></script>
 
-<script type="text/javascript" src="../../plugins/moment/moment.min.js"></script>
+<script type="text/javascript" src="../plugins/moment/moment.min.js"></script>
 
-<script type="text/javascript" src="../../plugins/chartjs/chart.min.js"></script>
+<script type="text/javascript" src="../plugins/chartjs/chart.min.js"></script>
 
-<script type="text/javascript" src="../../plugins/select2/i18n/select2.full.min.js"></script>
+<script type="text/javascript" src="../plugins/select2/select2.full.min.js"></script>
 
-<script src="../../plugins/iCheck/icheck.js"></script>
+<script src="../plugins/iCheck/icheck.js"></script>
 
 <script type="text/javascript">
 var type;
@@ -502,26 +519,32 @@ $(".clickable").click(function() {
                     cache: false,
                     success: function(data)
                     {
-                      // alert("success")
-                      setTimeout(function(){
-                      location.reload(true); // then reload the page.(3)
-                      }, 5000);
+                      location.reload(true);
                     }
                 });
             });
 
 <?php if($tdate == $date){ ?>
-$(".updateable").click(function() {
+$(document).ready(function() {
                 //alert($(this).attr('id'));
             <?php
                $q_tssum = "SELECT SUM(gtotal) AS tssum from billdb.`billtb` WHERE bdate='".$date."'";
                         $row_tssum = $conn->query($q_tssum);
                         $f_tssum = mysqli_fetch_assoc($row_tssum);
-                        $tssum=$f_tssum["tssum"]; ?>
+                        $tssum=$f_tssum["tssum"];
+                        if($tssum === NULL){$tssum = 0;}
+
+              $q_tserv = "SELECT SUM(amount) AS tserv from service_db.`servicetb` WHERE sdate='".$date."'";
+                        $row_tserv = $conn->query($q_tserv);
+                        $f_tserv = mysqli_fetch_assoc($row_tserv);
+                        $tserv=$f_tserv["tserv"];
+                        if($tserv === NULL){$tserv = 0;} ?>
 
               var tssum = <?php echo $tssum ?>;
+              var tserv = <?php echo $tserv ?>;
               var ac = document.getElementById('ac');
               ac.rows[2].cells[3].innerHTML = tssum;
+              ac.rows[3].cells[3].innerHTML = tserv;
             });
 <?php
 }

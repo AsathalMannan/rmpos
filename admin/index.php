@@ -11,8 +11,6 @@ else if(isset($_GET["stockmd"])){
   $loc = "stockmd/";}
 else if(isset($_GET["salehistory"])){
   $loc = "salehistory/";}
-else if(isset($_GET["accounts"])){
-  $loc = "ac/";}
 else if(isset($_GET["binfo"])){
   $loc = "binfo/";}
 else{
@@ -80,15 +78,15 @@ else{
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../plugins/font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../plugins/ionicons-2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <!-- iCheck -->
-  <link rel="stylesheet" href="../../plugins/iCheck/square/blue.css">
+  <link rel="stylesheet" href="../plugins/iCheck/square/blue.css">
 
   <style type="text/css">
     body{
@@ -150,11 +148,11 @@ else{
 <!-- /.login-box -->
 
 <!-- jQuery 2.2.3 -->
-<script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="../../bootstrap/js/bootstrap.min.js"></script>
+<script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- iCheck -->
-<script src="../../plugins/iCheck/icheck.min.js"></script>
+<script src="../plugins/iCheck/icheck.min.js"></script>
 <script>
   $(function () {
     $('input').iCheck({
