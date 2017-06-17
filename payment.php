@@ -1,12 +1,11 @@
 <?php
+require __DIR__.'plugins/Browser.php/lib/Browser.php';
+
 date_default_timezone_set('Asia/Kolkata');
 $username="root";
 $password="pass123";
 $database="stock";
 $conn = mysqli_connect("localhost", $username, $password, $database);
-
-// $query = "SELECT pno,pname,category,price FROM stocktb";
-// $row_stockdb = $conn->query($query);
 
 //getting POST data
 $arrayer = json_decode(stripslashes($_POST['arrayer']));
@@ -67,16 +66,24 @@ $pchange = new item('Change', $return, true);
 
 
 $pdate = date('d-m-Y');
-
 require __DIR__ . '/plugins/escpos-php/autoload.php';
-use Mike42\Escpos\Printer;
-use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
-use Mike42\Escpos\CapabilityProfile;
+	use Mike42\Escpos\Printer;
+	use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+	use Mike42\Escpos\PrintConnectors\FilePrintConnector;
+	use Mike42\Escpos\CapabilityProfile;
 
 try {
     
     $profile = CapabilityProfile::load("default");
-    $connector = new WindowsPrintConnector("EPSON TM-T81 Receipt");
+	$platform = new Browser();
+
+    if( $platform->getPlatform() == Browser::PLATFORM_WINDOWS ) {
+    	$connector = new WindowsPrintConnector("EPSON TM-T81 Receipt");
+	}
+	elseif( $platform->getPlatform() == Browser::PLATFORM_LINUX ) {
+    	$connector = new FilePrintConnector("/dev/usb/lp0");
+	}
+
 
     $printer = new Printer($connector, $profile);
     $fonts = array(
