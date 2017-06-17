@@ -42,29 +42,4 @@ $result1 = mysqli_query($conn, $q_insert);
 
 }
 
-// $content = array();
-// $head = array();
-
-// for($i=0;$i<$arrlength;$i++) {
-	
-// 	$content = array(
-// 	'Name' => $arrayer0[$i], 
-// 	'Type' => $arrayer1[$i], 
-// 	'Amount' => $arrayer2[$i]);
-// }
-
-// $head[] = array(
-// 	'Date' => $date,
-// 	'REPORT' => $content,
-// 	'TOTAL INCOME' => $tinc, 
-// 	'TOTAL EXPENDITURE' => $texp,
-//  	'TODAY TOTAL' => $ledger
-// );
-
-
-// $fp = fopen('accounts-book.json', 'a');
-// fwrite($fp, json_encode($head));
-// fclose($fp);
-
-
 ?>

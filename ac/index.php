@@ -112,7 +112,7 @@ $ytt=$f_ytt["tt"];
               <?php
                 if( isset($_SESSION['user']) ) {
                 echo "<div class=\"pull-left\">
-                                  <a href=\"#\" class=\"btn btn-default btn-flat\">Profile</a>
+                                  <a href=\"../admin/ua\" class=\"btn btn-default btn-flat\">Profile</a>
                                 </div>
                                 <div class=\"pull-right\">
                                   <a href=\"../admin/logout.php?logout\" class=\"btn btn-default btn-flat\">Sign out</a>

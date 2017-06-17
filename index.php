@@ -108,7 +108,7 @@ header("Pragma: no-cache");
               <?php
                 if( isset($_SESSION['user']) ) {
                 echo "<div class=\"pull-left\">
-                                  <a href=\"#\" class=\"btn btn-default btn-flat\">Settings</a>
+                                  <a href=\"admin/ua\" class=\"btn btn-default btn-flat\">Settings</a>
                                 </div>
                                 <div class=\"pull-right\">
                                   <a href=\"admin/logout.php?logout\" class=\"btn btn-default btn-flat\">Sign out</a>
