@@ -1,5 +1,5 @@
 <?php
-require __DIR__.'plugins/Browser.php/lib/Browser.php';
+require 'plugins/Browser.php/lib/Browser.php';
 
 date_default_timezone_set('Asia/Kolkata');
 $username="root";
@@ -69,22 +69,12 @@ $pdate = date('d-m-Y');
 require __DIR__ . '/plugins/escpos-php/autoload.php';
 	use Mike42\Escpos\Printer;
 	use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
-	use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 	use Mike42\Escpos\CapabilityProfile;
 
 try {
     
     $profile = CapabilityProfile::load("default");
-	$platform = new Browser();
-
-    if( $platform->getPlatform() == Browser::PLATFORM_WINDOWS ) {
-    	$connector = new WindowsPrintConnector("EPSON TM-T81 Receipt");
-	}
-	elseif( $platform->getPlatform() == Browser::PLATFORM_LINUX ) {
-    	$connector = new FilePrintConnector("/dev/usb/lp0");
-	}
-
-
+    $connector = new WindowsPrintConnector("EPSON TM-T81 Receipt");
     $printer = new Printer($connector, $profile);
     $fonts = array(
 	Printer::FONT_A,
