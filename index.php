@@ -51,6 +51,8 @@ header("Pragma: no-cache");
   <link rel="stylesheet" href="rmpos.css">
   <link rel="stylesheet" href="plugins/animate/animate.css">
 
+  <link rel="stylesheet" href="plugins/select2/select2.min.css">
+  <link rel="stylesheet" href="plugins/select2/select2-bootstrap.min.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -195,7 +197,7 @@ header("Pragma: no-cache");
               <div class="row">
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
-                    <span id="ttotal" class="description-percentage text-blue" style="font-size: 4em;">0</span><br>
+                    <span id="ttotal" class="description-percentage text-blue" style="font-size: 3em;">0</span><br>
                     <span class="description-text">No. of Items</span>
                   </div>
                   <!-- /.description-block -->
@@ -204,7 +206,7 @@ header("Pragma: no-cache");
                 
                 <div class="col-sm-3 col-xs-6 pull-right">
                   <div class="description-block">
-                    <span id="tprice" class="description-percentage text-green" style="font-size: 4em;">₹ 0</span><br>
+                    <span id="tprice" class="description-percentage text-green" style="font-size: 3em;">₹ 0</span><br>
                     <span class="description-text">Total Price</span>
                   </div>
                   <!-- /.description-block -->
@@ -228,20 +230,24 @@ header("Pragma: no-cache");
             <!-- form start -->
             <form role="form">
               <div class="box-body">
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="pid">Product Id</label>
                   <input type="text" class="form-control" id="pid" placeholder="2896" autocomplete="off">
                   <div id="pname"></div>
                   <div id="cate"></div>
                   <div id="price"></div>
                   <div id="suggesstion-box-1"></div>
+                </div> -->
+                <div class="form-group">
+                   <label class="control-label" for="pro" >Product Name</label>
+                   <select class="productName form-control" id="pro" name="productName"></select>
                 </div>
               </div>
               <!-- /.box-body -->
 
-              <div class="box-footer">
+              <!-- <div class="box-footer">
                 <button id="add-entry" type="button" class="btn btn-success">Add</button>
-              </div>
+              </div> -->
             </form>
           </div>
           <!-- /.box -->
@@ -297,6 +303,7 @@ header("Pragma: no-cache");
 
 <!-- jQuery 2.2.3 -->
 <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+
 <!-- Bootstrap 3.3.7 -->
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
@@ -308,9 +315,8 @@ header("Pragma: no-cache");
 
 <script type="text/javascript" src="plugins/bootstrap-notify-3.1.3/dist/bootstrap-notify.min.js"></script>
 
-<script type="text/javascript">
-  
-</script>
+<script type="text/javascript" src="plugins/select2/select2.full.min.js"></script>
+
 
 <script type="text/javascript">
   $(function(){
@@ -322,40 +328,40 @@ header("Pragma: no-cache");
 </script>
 
 <script type="text/javascript">
-  // AJAX call for autocomplete 
-    $(document).ready(function(){
-      $("#pid").keyup(function(){
-        $.ajax({
-        type: "POST",
-        url: "admin/stockmd/ajax-pidlist.php",
-        data:'keyword-pno='+$(this).val(),
-        beforeSend: function(){
-          $("#pid").css("background","#FFF no-repeat 165px");
-        },
-        success: function(data){
-          $("#suggesstion-box-1").show();
-          $("#suggesstion-box-1").html(data);
-          $("#pid").css("background","#FFF");
-        }
-        });
-      });
-    });
+  // // AJAX call for autocomplete 
+  //   $(document).ready(function(){
+  //     $("#pid").keyup(function(){
+  //       $.ajax({
+  //       type: "POST",
+  //       url: "admin/stockmd/ajax-pidlist.php",
+  //       data:'keyword-pno='+$(this).val(),
+  //       beforeSend: function(){
+  //         $("#pid").css("background","#FFF no-repeat 165px");
+  //       },
+  //       success: function(data){
+  //         $("#suggesstion-box-1").show();
+  //         $("#suggesstion-box-1").html(data);
+  //         $("#pid").css("background","#FFF");
+  //       }
+  //       });
+  //     });
+  //   });
 
 
-    function selectpid(val) { $("#pid").val(val); $("#suggesstion-box-1").hide(); }
-    function selectpname(val) { $("#pname").val(val); }
-    function selectcate(val) { $("#cate").val(val); }
-    function selectprice(val) { $("#price").val(val); }
+  //   function selectpid(val) { $("#pid").val(val); $("#suggesstion-box-1").hide(); }
+  //   function selectpname(val) { $("#pname").val(val); }
+  //   function selectcate(val) { $("#cate").val(val); }
+  //   function selectprice(val) { $("#price").val(val); }
 
-    $(document).ready(function(){
-        $("#add-entry").click(function(){
-            var pid = $("#pid").val();
-            var pname = $("#pname").val();
-            var cate = $("#cate").val();
-            var price = $("#price").val();
-            var markup = "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td>" + pid + "</td><td>" + pname + "</td><td>" + cate + "</td><td class='countable'>" + price + "</td></tr>";
-            $("#cart-tb tbody").append(markup); 
-        });
+  //   $(document).ready(function(){
+  //       $("#add-entry").click(function(){
+  //           var pid = $("#pid").val();
+  //           var pname = $("#pname").val();
+  //           var cate = $("#cate").val();
+  //           var price = $("#price").val();
+  //           var markup = "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td>" + pid + "</td><td>" + pname + "</td><td>" + cate + "</td><td class='countable'>" + price + "</td></tr>";
+  //           $("#cart-tb tbody").append(markup); 
+  //       });
         
         // Find and remove selected table rows
         $(".delete-row").click(function(){
@@ -364,8 +370,7 @@ header("Pragma: no-cache");
                     $(this).parents("tr").remove();
                 }
             });
-        });
-    });    
+        });   
 
     $('#cart-tb').on('click', '#delete-row', function(){
       $(this).closest ('tr').remove ();
@@ -459,6 +464,45 @@ $(".clickable").click(function() {
                     }
                 });
             });
+
+var pno,pname,cate,price
+$( ".productName" ).select2({    
+    placeholder: "Product No.", 
+    theme: "bootstrap",   
+    ajax: {
+        url: "productsList.php",
+        dataType: 'json',
+        data: function (params) {
+            return {
+                q: params.term // search term
+            };
+        },
+        processResults: function (data) {
+            return {
+                results: data
+            };
+
+        },
+        cache: false
+    },
+    minimumInputLength: 1
+});
+
+$( ".productName" ).on("select2:select", function(e) {
+          var pno = $(this).select2('data')[0].id;
+          var pna = $(this).select2('data')[0].pname;
+          var cate = $(this).select2('data')[0].category;
+          var pric = $(this).select2('data')[0].price;
+          var markup = "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td>" + pno + "</td><td>" + pna + "</td><td>" + cate + "</td><td class='countable'>" + pric + "</td></tr>";
+          $("#cart-tb tbody").append(markup); 
+          $('.productName').empty();
+          $(".productName").select2("open");
+
+        });
+
+$(document).ready(function(){
+  $(".productName").select2("open");
+});
 
 </script>
 
