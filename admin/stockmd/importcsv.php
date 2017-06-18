@@ -4,6 +4,8 @@ $password="pass123";
 $database="stock";
 $con = mysqli_connect("localhost", $username, $password, $database);
 
+$date = date("Y-m-d");
+
  if(isset($_POST["Import"])){
 		
 		$filename=$_FILES["file"]["tmp_name"];		
@@ -16,8 +18,8 @@ $con = mysqli_connect("localhost", $username, $password, $database);
 	         {
 
 
-	           $sql = "INSERT into stocktb (pno,pname,category,price) 
-                   values ('".$getData[0]."','".$getData[1]."','".$getData[2]."','".$getData[3]."')";
+	           $sql = "INSERT into stocktb (pno,pname,category,price,adate) 
+                   values ('".$getData[0]."','".$getData[1]."','".$getData[2]."','".$getData[3]."','".$date."')";
                    $result = mysqli_query($con, $sql);
 				if(!isset($result))
 				{

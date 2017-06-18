@@ -133,6 +133,7 @@ $date = date("Y-m-d");
         <li class="active"><a href=""><i class="fa fa-wrench"></i> <span>Services</span></a></li>
         <li><a href="db.php"><i class="fa fa-book"></i> <span>Stock Book</span></a></li>
         <li><a href="ac"><i class="fa fa-inr"></i> <span>Accounts</span></a></li>
+        <li><a href="backup.php"><i class="fa fa-hdd-o"></i> <span>Backup</span></a></li>
 
 
         <li class="header">DASHBOARD</li>

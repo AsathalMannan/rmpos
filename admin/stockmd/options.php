@@ -1,8 +1,12 @@
 <?php
+
+date_default_timezone_set('Asia/Kolkata');
 $username="root";
 $password="pass123";
 $database="stock";
 $con = mysqli_connect("localhost", $username, $password, $database);
+
+$date = date("Y-m-d");
 
   $pid = trim($_POST['pid']);
   $pid = strip_tags($pid);
@@ -23,7 +27,7 @@ $con = mysqli_connect("localhost", $username, $password, $database);
 if(isset($_POST["add"])){
 
        $sql = "INSERT into stocktb (pno,pname,category,price) 
-           values ('".$pid."','".$pname."','".$cate."','".$price."')";
+           values ('".$pid."','".$pname."','".$cate."','".$price."','".$date."')";
            $result = mysqli_query($con, $sql);
 		if(!isset($result))
 		{
