@@ -183,154 +183,21 @@ $q_user = "SELECT name,role from userdb.users WHERE uname='".$uid."'";
                   <p class="text-center">
                     <strong>Stock On: <?php echo date('d-M-Y'); ?></strong>
                   </p>
+                  <?php 
 
-                  <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
-                      <h5 class="description-header"><?php echo($scratch); ?></h5>
-                      <span class="description-text">Scratch Gaurd</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
-                      <h5 class="description-header"><?php echo($back); ?></h5>
-                      <span class="description-text">Back Case</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
-                      <h5 class="description-header"><?php echo($flip); ?></h5>
-                      <span class="description-text">Flip Case</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
-                      <h5 class="description-header"><?php echo($memory); ?></h5>
-                      <span class="description-text">Memory Card</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
-                      <h5 class="description-header"><?php echo($pendrive); ?></h5>
-                      <span class="description-text">Pendrive</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
-                      <h5 class="description-header"><?php echo($power); ?></h5>
-                      <span class="description-text">Power Bank</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
-                      <h5 class="description-header"><?php echo($charger); ?></h5>
-                      <span class="description-text">Charger</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
-                      <h5 class="description-header"><?php echo($mobile); ?></h5>
-                      <span class="description-text">Mobile Phones</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
-                      <h5 class="description-header"><?php echo($cardreader); ?></h5>
-                      <span class="description-text">Card Reader</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
-                      <h5 class="description-header"><?php echo($headphones); ?></h5>
-                      <span class="description-text">Headphones</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
-                      <h5 class="description-header"><?php echo($battery); ?></h5>
-                      <span class="description-text">Battery</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
-                      <h5 class="description-header"><?php echo($datacables); ?></h5>
-                      <span class="description-text">Data Cables</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
-                      <h5 class="description-header"><?php echo($mobilepanels); ?></h5>
-                      <span class="description-text">Mobile Panels</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
-                      <h5 class="description-header"><?php echo($speakers); ?></h5>
-                      <span class="description-text">Speakers</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
-                      <h5 class="description-header"><?php echo($tampered); ?></h5>
-                      <span class="description-text">Tampered Glass</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                  <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
-                      <h5 class="description-header"><?php echo($numitems); ?></h5>
-                      <span class="description-text">Total</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>
-                </div>
-                <!-- /.col -->
-               
-              </div>
-              <!-- /.row -->
-            </div>
-            <!-- ./box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-
-        <div class="col-md-6">
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Chart</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="row">
-                <div class="col-md-6">
-                  <p class="text-center">
-                    <strong>Stock On: <?php echo date('d-M-Y'); ?></strong>
-                  </p>
-                  <div id="canvas-holder" style="width:100%" >
-                      <canvas id="chart-area" />
-                  </div>
+                  $q_count = "SELECT category, COUNT(pno) as count FROM stocktb GROUP BY category";
+                  $row_count = $conn->query($q_count);
+                  while($f_count = mysqli_fetch_assoc($row_count)){
+                  $cate=$f_count["category"];
+                  $count=$f_count["count"];
+                    echo "<div class=\"col-sm-3 col-xs-6\">
+                          <div class=\"description-block border-right\">
+                            <h5 class=\"description-header\">".$count."</h5>
+                            <span class=\"description-text\">".$cate."</span>
+                          </div>           
+                        </div>";
+                  }
+                  ?>
 
                   
                 </div>
@@ -345,7 +212,6 @@ $q_user = "SELECT name,role from userdb.users WHERE uname='".$uid."'";
         </div>
         <!-- /.col -->
       
-
       </div>
 
     </section>
@@ -368,74 +234,5 @@ $q_user = "SELECT name,role from userdb.users WHERE uname='".$uid."'";
 
 <script type="text/javascript" src="../../plugins/fastclick/fastclick.min.js"></script>
 
-<script type="text/javascript" src="../../plugins/moment/moment.min.js"></script>
-
-<script type="text/javascript" src="../../plugins/chartjs/chart.min.js"></script>
-
-<script type="text/javascript">
-
-var piechart = document.getElementById("chart-area").getContext("2d");
-var myPieChart = new Chart(piechart,{
-    type: 'doughnut',
-    data:  {
-    labels: [
-        "Scratch Gaurd",
-        "Back Case",
-        "Flip Case",
-        "Memory Card",
-        "Pendrive",
-        "Power Bank",
-        "Charger",
-        "Mobile Phones",
-        "Card Reader",
-        "Headphones",
-        "Battery",
-        "Data Cables",
-        "Mobile Panels",
-        "Speakers",
-        "Tampered Glass"
-    ],
-    datasets: [
-        {
-            data: [<?php echo $scratch,",",$back,",",$flip,",",$memory,",",$pendrive,",",$power,",",$charger,",",$mobile,",",$cardreader,",",$headphones,",",$battery,",",$datacables,",",$mobilepanels,",",$speakers,",",$tampered ?>],
-            backgroundColor: [
-                "#d50000",
-                "#C51162",
-                "#AA00FF",
-                "#6200EA",
-                "#DD2C00",
-                "#FF6D00",
-                "#FFAB00",
-                "#AEEA00",
-                "#FFD600",
-                "#00C853",
-                "#0091EA",
-                "#CDDC39",
-                "#FFEB3B",
-                "#FFC107",
-                "#795548",
-            ]
-        }]
-},
-   options: {
-        responsive: true,
-        legend: {
-            display: false,
-            position: 'right',
-        },
-        animation: {
-            animateScale: true,
-            animateRotate: true
-        }
-    }
-});
-
-   
-</script>
-
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
 </body>
 </html>
