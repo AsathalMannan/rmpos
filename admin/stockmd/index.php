@@ -362,8 +362,9 @@ $q_user = "SELECT name,role from userdb.users WHERE uname='".$uid."'";
 
 <!--Datatable init-->
 <script type="text/javascript">
+var table;
 $(document).ready( function () {
-    $('#db-tb').DataTable({
+    table = $('#db-tb').DataTable({
       paging: true,
       scrollY: 424,
       responsive: true,
@@ -378,8 +379,8 @@ $(document).ready( function () {
         },
       "columns": [
                 {"data": "pno"},
-                {"data": "pname"},
                 {"data": "category"},
+                {"data": "pname"},
                 {"data": "price"}
             ],
       keys: {
@@ -397,7 +398,17 @@ $(document).ready( function () {
       ]
       
     });
+    $('#db-tb tbody').on( 'click', 'tr', function () {
+      var data = table.row( this ).data();
+      document.getElementById('pid').value = data['pno'];
+      document.getElementById('cate').value = data['category'];
+      document.getElementById('pname').value = data['pname'];
+      document.getElementById('price').value = data['price'];
+    } );
+
 } );
+ 
+
 </script>
 
 <script type="text/javascript">
@@ -444,59 +455,5 @@ $(function() {
 });
 </script>
 
-<script type="text/javascript">
-  // AJAX call for autocomplete 
-    $(document).ready(function(){
-      $("#pid").keyup(function(){
-        $.ajax({
-        type: "POST",
-        url: "ajax-pidlist.php",
-        data:'keyword-pno='+$(this).val(),
-        beforeSend: function(){
-          $("#pid").css("background","#FFF no-repeat 165px");
-        },
-        success: function(data){
-          $("#suggesstion-box-1").show();
-          $("#suggesstion-box-1").html(data);
-          $("#pid").css("background","#FFF");
-        }
-        });
-      });
-    });
-</script>
-
-<script type="text/javascript">
-  // AJAX call for autocomplete 
-    $(document).ready(function(){
-      $("#pname").keyup(function(){
-        $.ajax({
-        type: "POST",
-        url: "ajax-pidlist.php",
-        data:'keyword-pname='+$(this).val(),
-        beforeSend: function(){
-          $("#pid").css("background","#FFF no-repeat 165px");
-        },
-        success: function(data){
-          $("#suggesstion-box-2").show();
-          $("#suggesstion-box-2").html(data);
-          $("#pid").css("background","#FFF");
-        }
-        });
-      });
-    });
-</script>
-
-<script type="text/javascript">
-      //To select country name
-    function selectpid(val) { $("#pid").val(val); $("#suggesstion-box-1").hide(); }
-    function selectpname(val) { $("#pname").val(val); $("#suggesstion-box-2").hide(); }
-    function selectcate(val) { $("#cate").val(val); }
-    function selectprice(val) { $("#price").val(val); }
-</script>
-
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
 </body>
 </html>

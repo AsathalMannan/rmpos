@@ -231,24 +231,12 @@ header("Pragma: no-cache");
             <!-- form start -->
             <form role="form">
               <div class="box-body">
-                <!-- <div class="form-group">
-                  <label for="pid">Product Id</label>
-                  <input type="text" class="form-control" id="pid" placeholder="2896" autocomplete="off">
-                  <div id="pname"></div>
-                  <div id="cate"></div>
-                  <div id="price"></div>
-                  <div id="suggesstion-box-1"></div>
-                </div> -->
                 <div class="form-group">
                    <label class="control-label" for="pro" >Product No</label>
                    <select class="productName form-control select2-selection--single" id="pro" name="productName" style="width: 100%;"></select>
                 </div>
               </div>
               <!-- /.box-body -->
-
-              <!-- <div class="box-footer">
-                <button id="add-entry" type="button" class="btn btn-success">Add</button>
-              </div> -->
             </form>
           </div>
           <!-- /.box -->
@@ -329,40 +317,6 @@ header("Pragma: no-cache");
 </script>
 
 <script type="text/javascript">
-  // // AJAX call for autocomplete 
-  //   $(document).ready(function(){
-  //     $("#pid").keyup(function(){
-  //       $.ajax({
-  //       type: "POST",
-  //       url: "admin/stockmd/ajax-pidlist.php",
-  //       data:'keyword-pno='+$(this).val(),
-  //       beforeSend: function(){
-  //         $("#pid").css("background","#FFF no-repeat 165px");
-  //       },
-  //       success: function(data){
-  //         $("#suggesstion-box-1").show();
-  //         $("#suggesstion-box-1").html(data);
-  //         $("#pid").css("background","#FFF");
-  //       }
-  //       });
-  //     });
-  //   });
-
-
-  //   function selectpid(val) { $("#pid").val(val); $("#suggesstion-box-1").hide(); }
-  //   function selectpname(val) { $("#pname").val(val); }
-  //   function selectcate(val) { $("#cate").val(val); }
-  //   function selectprice(val) { $("#price").val(val); }
-
-  //   $(document).ready(function(){
-  //       $("#add-entry").click(function(){
-  //           var pid = $("#pid").val();
-  //           var pname = $("#pname").val();
-  //           var cate = $("#cate").val();
-  //           var price = $("#price").val();
-  //           var markup = "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td>" + pid + "</td><td>" + pname + "</td><td>" + cate + "</td><td class='countable'>" + price + "</td></tr>";
-  //           $("#cart-tb tbody").append(markup); 
-  //       });
         
         // Find and remove selected table rows
         $(".delete-row").click(function(){
@@ -409,6 +363,12 @@ $('#cart-tb tbody').on("DOMSubtreeModified", function(){
 </form>
 
 <script type="text/javascript">
+$(document).keydown(function(e) {
+    if(e.which == 9) {
+      $('#disc').focus();
+    }
+});
+
 var retur;
 var disc;
 var adisc;
@@ -441,30 +401,40 @@ var i=0;
         }
       }
 
-$(".clickable").click(function() {
-                //alert($(this).attr('id'));
-                var arr1 = JSON.stringify(arr);
-                $.ajax({
-                    type: "POST",
-                    url: 'payment.php',
-                    data: {arrayer: arr1, amount: amnt, discount: disc, adiscount: adisc, return: retur, titems: row_count, amtot: total},
-                    cache: false,
-                    success: function(data)
-                    {
-                      $.notify({
-                          title: '<strong>Success!</strong>',
-                          message: 'The bill successfully generated and printed.',
-                          animate: {
-                              enter: 'animated flipInY',
-                              exit: 'animated flipOutX'
-                            }
-                        },{
-                          type: 'success'
-                        });
-                      $("#cart-tb > tbody > tr").remove();
-                    }
-                });
+$(document).keypress(function(e) {
+    if(e.which == 13) {
+      senditems();
+      ajaxcontrol();
+    }
+});
+$(".clickable").click(function() { senditems(); ajaxcontrol(); });
+                
+function ajaxcontrol(){
+    var arr1 = JSON.stringify(arr);
+    $.ajax({
+        type: "POST",
+        url: 'payment.php',
+        data: {arrayer: arr1, amount: amnt, discount: disc, adiscount: adisc, return: retur, titems: row_count, amtot: total},
+        cache: false,
+        success: function(data)
+        {
+          $.notify({
+              title: '<strong>Success!</strong>',
+              message: 'The bill successfully generated and printed.',
+              animate: {
+                  enter: 'animated flipInY',
+                  exit: 'animated flipOutX'
+                }
+            },{
+              type: 'success'
             });
+          $("#cart-tb > tbody > tr").remove();
+          $('#disc').val('');
+          $('#amnt').val('');
+          $('#return').val('');
+        }
+    });
+};
 
 var pno,pname,cate,price
 $( ".productName" ).select2({    
