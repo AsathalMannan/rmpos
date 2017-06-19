@@ -226,19 +226,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </thead>
                 <tbody>
                 <?php
-                  if(!empty($row_stockdb)){
-                    while( $f_stock = mysqli_fetch_assoc($row_stockdb)){
-                    $pno=$f_stock["pno"];
-                    $pname=$f_stock["pname"];
-                    $category=$f_stock["category"];
-                    $price=$f_stock["price"];
-                    echo "<tr>
-                            <td>".$pno."</td>
-                            <td>".$category."</td>
-                            <td>".$pname."</td>
-                            <td>".$price."</td>
-                          </tr>";
-                     }} ?>
+                  // if(!empty($row_stockdb)){
+                  //   while( $f_stock = mysqli_fetch_assoc($row_stockdb)){
+                  //   $pno=$f_stock["pno"];
+                  //   $pname=$f_stock["pname"];
+                  //   $category=$f_stock["category"];
+                  //   $price=$f_stock["price"];
+                  //   echo "<tr>
+                  //           <td>".$pno."</td>
+                  //           <td>".$category."</td>
+                  //           <td>".$pname."</td>
+                  //           <td>".$price."</td>
+                  //         </tr>";
+                  //    }}
+                      ?>
                 </tbody>
               </table>
             </div>
@@ -309,13 +310,17 @@ $(document).ready( function () {
       dom: 'Bfrtip',
       "processing": true,
       "deferRender": true,
-      responsive: true,
+      "serverSide": true,
+      "ajax": {
+            url: 'stockaccess.php',
+            type: 'POST'
+        },
       "columns": [
-        null,
-        { "orderable": false },
-        null,
-        { "orderable": false }
-      ],
+                {"data": "pno"},
+                {"data": "pname"},
+                {"data": "category"},
+                {"data": "price"}
+            ],
       keys: {
         columns: [ 1, 2, 3, 4 ],
       },

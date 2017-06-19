@@ -41,6 +41,8 @@ header("Pragma: no-cache");
   <link rel="stylesheet" href="plugins/font-awesome-4.7.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="plugins/ionicons-2.0.1/css/ionicons.min.css">
+
+  <link rel="stylesheet" href="plugins/select2/select2.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -51,8 +53,7 @@ header("Pragma: no-cache");
   <link rel="stylesheet" href="rmpos.css">
   <link rel="stylesheet" href="plugins/animate/animate.css">
 
-  <link rel="stylesheet" href="plugins/select2/select2.min.css">
-  <link rel="stylesheet" href="plugins/select2/select2-bootstrap.min.css">
+  
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -239,8 +240,8 @@ header("Pragma: no-cache");
                   <div id="suggesstion-box-1"></div>
                 </div> -->
                 <div class="form-group">
-                   <label class="control-label" for="pro" >Product Name</label>
-                   <select class="productName form-control" id="pro" name="productName"></select>
+                   <label class="control-label" for="pro" >Product No</label>
+                   <select class="productName form-control select2-selection--single" id="pro" name="productName" style="width: 100%;"></select>
                 </div>
               </div>
               <!-- /.box-body -->
@@ -467,8 +468,8 @@ $(".clickable").click(function() {
 
 var pno,pname,cate,price
 $( ".productName" ).select2({    
-    placeholder: "Product No.", 
-    theme: "bootstrap",   
+    placeholder: "8573", 
+    // theme: "bootstrap",   
     ajax: {
         url: "productsList.php",
         dataType: 'json',
