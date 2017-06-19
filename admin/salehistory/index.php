@@ -221,26 +221,6 @@ $q_user = "SELECT name,role from userdb.users WHERE uname='".$uid."'";
                 </tr>
                 </thead>
                 <tbody>
-                <?php
-                  if(!empty($row_billtb)){
-                    while( $f_billtb = mysqli_fetch_assoc($row_billtb)){
-                    $billno=$f_billtb["billno"];
-                    $bdate=$f_billtb["bdate"];
-                    $tprice=$f_billtb["tprice"];
-                    $discount=$f_billtb["discount"];
-                    $cash=$f_billtb["cash"];
-                    $gtotal=$f_billtb["gtotal"];
-                    $chng=$f_billtb["chng"];
-                    echo "<tr>
-                            <td>".$billno."</td>
-                            <td>".$bdate."</td>
-                            <td>".$tprice."</td>
-                            <td>".$discount."</td>
-                            <td>".$cash."</td>
-                            <td>".$gtotal."</td>
-                            <td>".$chng."</td>
-                          </tr>";
-                     }} ?>
                 </tbody>
               </table>
             </div>
@@ -274,22 +254,6 @@ $q_user = "SELECT name,role from userdb.users WHERE uname='".$uid."'";
                 </tr>
                 </thead>
                 <tbody>
-                <?php
-                  if(!empty($row_saletb)){
-                    while( $f_saletb = mysqli_fetch_assoc($row_saletb)){
-                    $billno=$f_saletb["billno"];
-                    $pid=$f_saletb["pid"];
-                    $pname=$f_saletb["pname"];
-                    $category=$f_saletb["category"];
-                    $price=$f_saletb["price"];
-                    echo "<tr>
-                            <td>#".$billno."</td>
-                            <td>".$pid."</td>
-                            <td>".$pname."</td>
-                            <td>".$category."</td>
-                            <td>".$price."</td>
-                          </tr>";
-                     }} ?>
                 </tbody>
               </table>
             </div>
@@ -355,16 +319,20 @@ $(document).ready( function () {
       dom: 'Bfrtip',
       "processing": true,
       "deferRender": true,
-      responsive: true,
+      "serverSide": true,
+      "ajax": {
+            url: 'billaccess.php',
+            type: 'POST'
+        },
       "columns": [
-        { "orderable": false },
-        { "orderable": false },
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
+                {"data": "billno"},
+                {"data": "bdate"},
+                {"data": "tprice"},
+                {"data": "discount"},
+                {"data": "cash"},
+                {"data": "gtotal"},
+                {"data": "chng"}
+            ],
       keys: {
         columns: [ 1, 2, 3, 4, 5, 6, 7 ],
       }
@@ -381,14 +349,18 @@ $(document).ready( function () {
       dom: 'Bfrtip',
       "processing": true,
       "deferRender": true,
-      responsive: true,
+      "serverSide": true,
+      "ajax": {
+            url: 'saleaccess.php',
+            type: 'POST'
+        },
       "columns": [
-        { "orderable": false },
-        { "orderable": false },
-        null,
-        null,
-        null
-      ],
+                {"data": "billno"},
+                {"data": "pid"},
+                {"data": "pname"},
+                {"data": "category"},
+                {"data": "price"}
+            ],
       keys: {
         columns: [ 1, 2, 3, 4, 5 ],
       },
