@@ -34,7 +34,7 @@ Web based Point Of Sale Software
 - This Web application [Download](https://github.com/AsathalMannan/rmpos/releases)
 
 ### Configuration
-**Install Xampp Server - **
+**Install Xampp Server --**
 Install Xampp Server with apache,mysql and phpmyadmin enabled. then configure the virtual host, the file located on `C:\xampp\apache\conf\extra\httpd-vhosts.conf` and add following link at the end of the file.
 ```
 <VirtualHost *:80>
@@ -51,17 +51,17 @@ then, add host name as follow in `host` file located on `C:\Windows\System32\dri
 ```
 127.0.0.1	rmpos.app
 ```
-**Extract Web application - **
+**Extract Web application -- **
 Extract downloaded web application on the location `C:/rmpos/`.
 
-**Change phpMyAdmin Password - ** Open phpMyAdmin and add root password then configure the following file `C:\xampp\phpMyAdmin\config.inc.php` and change following,
+**Change phpMyAdmin Password -- ** Open phpMyAdmin and add root password then configure the following file `C:\xampp\phpMyAdmin\config.inc.php` and change following,
 ```
 $cfg['Servers'][$i]['auth_type'] = 'cookie';
 $cfg['Servers'][$i]['password'] = '';
 $cfg['Servers'][$i]['AllowNoPassword'] = false;
 ```
-**Adding Databases - ** Download the Database.sql file from [releases](https://github.com/AsathalMannan/rmpos/releases) and import via phpMyAdmin.
+**Adding Databases -- ** Download the Database.sql file from [releases](https://github.com/AsathalMannan/rmpos/releases) and import via phpMyAdmin.
 
-
+**Installation finished --** Open Webbrowser and goto `rmpos.app`
 
 
