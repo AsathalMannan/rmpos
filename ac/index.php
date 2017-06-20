@@ -400,7 +400,7 @@ $ytt=$f_ytt["tt"];
 
 <!-- REQUIRED JS SCRIPTS -->
 
-<!-- jQuery 2.2.3 -->
+<!-- jQuery 3.2.1 -->
 <script src="../plugins/jQuery/jquery-3.2.1.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="../bootstrap/js/bootstrap.min.js"></script>
@@ -454,7 +454,6 @@ function tablepopulate(){
     var tt = document.querySelectorAll('#ac > tbody > tr > td:nth-child(3)');
     var typevalue = String(type);
     var total=0, inc=0, exp=0;
-    // var value = document.querySelector('table tr:last-child td:nth-child(3)').innerHTML;
 
     for (var i=0; i < td.length; i++)
     {
@@ -527,7 +526,6 @@ $(".clickable").click(function() {
 
 <?php if($tdate == $date){ ?>
 $(document).ready(function() {
-                //alert($(this).attr('id'));
             <?php
                $q_tssum = "SELECT SUM(gtotal) AS tssum from billdb.`billtb` WHERE bdate='".$date."'";
                         $row_tssum = $conn->query($q_tssum);

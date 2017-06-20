@@ -147,8 +147,8 @@ else{
 </div>
 <!-- /.login-box -->
 
-<!-- jQuery 2.2.3 -->
-<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- jQuery 3.2.1 -->
+<script src="../plugins/jQuery/jquery-3.2.1.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- iCheck -->

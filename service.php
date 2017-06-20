@@ -298,7 +298,7 @@ $date = date("Y-m-d");
 
 <!-- REQUIRED JS SCRIPTS -->
 
-<!-- jQuery 2.2.3 -->
+<!-- jQuery 3.2.1 -->
 <script src="plugins/jQuery/jquery-3.2.1.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="bootstrap/js/bootstrap.min.js"></script>

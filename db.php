@@ -1,6 +1,4 @@
 <?php
-
-
 ob_start();
 session_start();
 
@@ -51,10 +49,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="plugins/ionicons-2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-        page. However, you can choose any other skin. Make sure you
-        apply the skin class to the body tag so the changes take effect.
-  -->
+
   <link rel="stylesheet" href="dist/css/skins/skin-purple.min.css">
   <link rel="stylesheet" href="rmpos.css">
 
@@ -194,14 +189,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-<!--     <section class="content-header">
-      <h1>
-        Cart
-        <small>Add items</small>
-      </h1>
-    </section> -->
-
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -225,21 +212,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </tr>
                 </thead>
                 <tbody>
-                <?php
-                  // if(!empty($row_stockdb)){
-                  //   while( $f_stock = mysqli_fetch_assoc($row_stockdb)){
-                  //   $pno=$f_stock["pno"];
-                  //   $pname=$f_stock["pname"];
-                  //   $category=$f_stock["category"];
-                  //   $price=$f_stock["price"];
-                  //   echo "<tr>
-                  //           <td>".$pno."</td>
-                  //           <td>".$category."</td>
-                  //           <td>".$pname."</td>
-                  //           <td>".$price."</td>
-                  //         </tr>";
-                  //    }}
-                      ?>
                 </tbody>
               </table>
             </div>
@@ -261,9 +233,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- REQUIRED JS SCRIPTS -->
 
-<!-- jQuery 2.2.3 -->
-<!-- <script type="text/javascript" src="../DataTables/jQuery-2.2.4/jquery-2.2.4.min.js"></script> -->
-<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- jQuery 3.2.1 -->
+
+<script src="plugins/jQuery/jquery-3.2.1.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
@@ -274,8 +246,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script type="text/javascript" src="plugins/fastclick/fastclick.min.js"></script>
 
 <!-- Datatable -->
-<!-- <script type="text/javascript" src="../DataTables/jQuery-2.2.4/jquery-2.2.4.min.js"></script> -->
-<!-- <script type="text/javascript" src="../DataTables/Bootstrap-3.3.7/js/bootstrap.min.js"></script> -->
+
 <script type="text/javascript" src="DataTables/JSZip-3.1.3/jszip.min.js"></script>
 <script type="text/javascript" src="DataTables/pdfmake-0.1.27/build/pdfmake.min.js"></script>
 <script type="text/javascript" src="DataTables/pdfmake-0.1.27/build/vfs_fonts.js"></script>
@@ -332,9 +303,5 @@ $(document).ready( function () {
 } );
 </script>
 
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
 </body>
 </html>

@@ -53,7 +53,7 @@ $ytt=$f_ytt["tt"];
   <link rel="stylesheet" href="../dist/css/skins/skin-purple.min.css">
   <link rel="stylesheet" href="../rmpos.css">
 
-<link href="../plugins/iCheck/square/square.css" rel="stylesheet">
+  <link href="../plugins/iCheck/square/square.css" rel="stylesheet">
   <link rel="stylesheet" href="plugins/animate/animate.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -290,7 +290,7 @@ $ytt=$f_ytt["tt"];
 
 <!-- REQUIRED JS SCRIPTS -->
 
-<!-- jQuery 2.2.3 -->
+<!-- jQuery 3.2.1 -->
 <script src="../plugins/jQuery/jquery-3.2.1.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="../bootstrap/js/bootstrap.min.js"></script>

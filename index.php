@@ -45,10 +45,7 @@ header("Pragma: no-cache");
   <link rel="stylesheet" href="plugins/select2/select2.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-        page. However, you can choose any other skin. Make sure you
-        apply the skin class to the body tag so the changes take effect.
-  -->
+
   <link rel="stylesheet" href="dist/css/skins/skin-purple.min.css">
   <link rel="stylesheet" href="rmpos.css">
   <link rel="stylesheet" href="plugins/animate/animate.css">
@@ -159,14 +156,6 @@ header("Pragma: no-cache");
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-<!--     <section class="content-header">
-      <h1>
-        Cart
-        <small>Add items</small>
-      </h1>
-    </section> -->
-
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -290,8 +279,8 @@ header("Pragma: no-cache");
 
 <!-- REQUIRED JS SCRIPTS -->
 
-<!-- jQuery 2.2.3 -->
-<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- jQuery 3.2.1 -->
+<script src="plugins/jQuery/jquery-3.2.1.min.js"></script>
 
 <!-- Bootstrap 3.3.7 -->
 <script src="bootstrap/js/bootstrap.min.js"></script>

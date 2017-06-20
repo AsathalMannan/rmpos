@@ -12,8 +12,6 @@ header("Pragma: no-cache");
   exit;
  }
 
-include 'sale.php';
-
 date_default_timezone_set('Asia/Kolkata');
 $username="root";
 $password="pass123";
@@ -45,10 +43,7 @@ $q_user = "SELECT name,role from userdb.users WHERE uname='".$uid."'";
   <link rel="stylesheet" href="../../plugins/ionicons-2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-        page. However, you can choose any other skin. Make sure you
-        apply the skin class to the body tag so the changes take effect.
-  -->
+
   <link rel="stylesheet" href="../../dist/css/skins/skin-yellow.min.css">
   <link rel="stylesheet" href="../../rmpos.css">
 
@@ -155,12 +150,6 @@ $q_user = "SELECT name,role from userdb.users WHERE uname='".$uid."'";
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-<!--     <section class="content-header">
-      <h1>
-        Cart
-        <small>Add items</small>
-      </h1>
-    </section> -->
 
     <!-- Main content -->
     <section class="content">
@@ -197,40 +186,7 @@ $q_user = "SELECT name,role from userdb.users WHERE uname='".$uid."'";
           <!-- /.box -->
         </div>
         <!-- /.col -->
-
-        <div class="col-md-6">
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Chart</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="row">
-                <div class="col-md-6">
-                  <p class="text-center">
-                    <strong>Sales Report: <?php echo date('M'); ?></strong>
-                  </p>
-                  
-
-                  
-                </div>
-                <!-- /.col -->
-               
-              </div>
-              <!-- /.row -->
-            </div>
-            <!-- ./box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
       
-
       </div>
 
     </section>
@@ -242,8 +198,8 @@ $q_user = "SELECT name,role from userdb.users WHERE uname='".$uid."'";
 
 <!-- REQUIRED JS SCRIPTS -->
 
-<!-- jQuery 2.2.3 -->
-<script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- jQuery 3.2.1 -->
+<script src="../../plugins/jQuery/jquery-3.2.1.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="../../bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
@@ -265,7 +221,6 @@ $q_user = "SELECT name,role from userdb.users WHERE uname='".$uid."'";
 var options = {
   type: 'line',
   data: {
-    // labels: ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
     labels: [<?php
 $M = date("M"); $d = date("d"); 
   $date = "01-".$M;
