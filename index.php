@@ -403,11 +403,37 @@ var i=0;
 
 $(document).keypress(function(e) {
     if(e.which == 13) {
-      senditems();
-      ajaxcontrol();
+      var a = document.getElementById('amnt').value;
+      var b = document.getElementById('disc').value;
+
+      if (b == "") {
+        alert("Discount must be filled out");
+        return false;
+      }
+      else if (a == "") {
+        alert("Amount must be filled out");
+        return false;
+      }
+      else{
+        senditems();
+        ajaxcontrol();
+      }
     }
 });
-$(".clickable").click(function() { senditems(); ajaxcontrol(); });
+$(".clickable").click(function() { 
+  var a = document.getElementById('amnt').value;
+      var b = document.getElementById('disc').value;
+
+      if (b == "") {
+        alert("Discount must be filled out");
+        return false;
+      }
+      else if (a == "") {
+        alert("Amount must be filled out");
+        return false;
+      }
+      else{senditems(); ajaxcontrol();} 
+    });
                 
 function ajaxcontrol(){
     var arr1 = JSON.stringify(arr);
@@ -464,11 +490,12 @@ $( ".productName" ).on("select2:select", function(e) {
           var pna = $(this).select2('data')[0].pname;
           var cate = $(this).select2('data')[0].category;
           var pric = $(this).select2('data')[0].price;
-          var markup = "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td>" + pno + "</td><td>" + pna + "</td><td>" + cate + "</td><td class='countable'>" + pric + "</td></tr>";
-          $("#cart-tb tbody").append(markup); 
-          $('.productName').empty();
-          $(".productName").select2("open");
 
+                var markup = "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td>" + pno + "</td><td>" + pna + "</td><td>" + cate + "</td><td class='countable'>" + pric + "</td></tr>";
+                $("#cart-tb tbody").append(markup); 
+                $('.productName').empty();
+                $(".productName").select2("open");
+ 
         });
 
 $(document).ready(function(){

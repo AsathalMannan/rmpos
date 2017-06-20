@@ -197,6 +197,16 @@ $q_user = "SELECT name,role from userdb.users WHERE uname='".$uid."'";
                           </div>           
                         </div>";
                   }
+                  $q_tcount = "SELECT COUNT(pno) as tcount FROM stocktb";
+                  $row_tcount = $conn->query($q_tcount);
+                  $f_tcount = mysqli_fetch_assoc($row_tcount);
+                  $tcount=$f_tcount["tcount"];
+                  echo "<div class=\"col-sm-3 col-xs-6\">
+                          <div class=\"description-block border-right\">
+                            <h5 class=\"description-header\">".$tcount."</h5>
+                            <span class=\"description-text\">TOTAL</span>
+                          </div>           
+                        </div>"
                   ?>
 
                   
