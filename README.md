@@ -1,5 +1,5 @@
 # RMPOS
-Web based Point Of Sale Software
+Web based Point Of Sale Software by Ajmal Hussain Hy [AsathalMannan](https://github.com/AsathalMannan/)
 
 ## Credits
 ### Projects Used
