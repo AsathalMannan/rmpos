@@ -190,7 +190,7 @@ $date = date("Y-m-d");
                   <tbody>
                   <?php 
 
-                    $q_today = "SELECT dname,descrip,customer,amount FROM service_db.`servicetb` WHERE sdate='".$date."'";
+                    $q_today = "SELECT dname,descrip,customer,amount FROM servicedb.`servicetb` WHERE sdate='".$date."'";
                     $row_today = $conn->query($q_today);
                     while ($f_today = mysqli_fetch_assoc($row_today)){
                       $today_dname=$f_today["dname"];

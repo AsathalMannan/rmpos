@@ -2,7 +2,7 @@
 date_default_timezone_set('Asia/Kolkata');
 $username="root";
 $password="pass123";
-$database="service_db";
+$database="servicedb";
 $conn = mysqli_connect("localhost", $username, $password, $database);
 
 //getting POST data

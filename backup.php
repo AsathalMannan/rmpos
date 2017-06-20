@@ -217,7 +217,7 @@ $ytt=$f_ytt["tt"];
                         $mbytes2 = number_format($size/(1024*1024),$decimals);
                     }
 
-                    mysqli_select_db($conn, "service_db");  
+                    mysqli_select_db($conn, "servicedb");  
                     $q = mysqli_query($conn, "SHOW TABLE STATUS");  
                     $size = 0;  
                     while($row = mysqli_fetch_assoc($q)) {  
@@ -246,7 +246,7 @@ $ytt=$f_ytt["tt"];
               ?>
                   <tr><td>ACCOUNTS (accounts)</td><td><?php echo $mbytes1." Mb" ?></td></tr>
                   <tr><td>BILL BOOK (billdb)</td><td><?php echo $mbytes2." Mb" ?></td></tr>
-                  <tr><td>SERVICE (service_db)</td><td><?php echo $mbytes3." Mb" ?></td></tr>
+                  <tr><td>SERVICE (servicedb)</td><td><?php echo $mbytes3." Mb" ?></td></tr>
                   <tr><td>USER (userdb)</td><td><?php echo $mbytes5." Mb" ?></td></tr>  
                   <tr><td>STOCK BOOK (stock)</td><td><?php echo $mbytes4." Mb" ?></td></tr>
                   </tbody>
@@ -269,6 +269,31 @@ $ytt=$f_ytt["tt"];
                   
                 </div>
                 <!-- /.col -->
+                <div class="col-md-4">
+                  <p class="text-center">
+                    <strong>Restore</strong>
+                  </p>
+                  <div class="input-group image-preview">
+                    <input type="text" class="form-control image-preview-filename" name="file" disabled>
+                      <span class="input-group-btn">
+                        <!-- image-preview-clear button -->
+                        <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                        <!-- image-preview-input -->
+                        <div class="btn btn-default image-preview-input">
+                            <span class="image-preview-input-title">
+                              <span class="glyphicon glyphicon-folder-open"></span>
+                            </span>
+                            <input type="file" accept=".sql" name="file"/> <!-- rename it -->
+                        </div>
+                        <button class="btn btn-default image-preview-input" type="button" id="rstr" name="Restore">
+                            <span class="glyphicon glyphicon-import"></span> Restore
+                        </button>
+                      </span>
+                  </div>
+                  
+                </div>
               </div>
               <!-- /.row -->
             </div>
@@ -310,6 +335,52 @@ $ytt=$f_ytt["tt"];
 <script type="text/javascript" src="plugins/bootstrap-notify-3.1.3/dist/bootstrap-notify.min.js"></script>
 
 <script type="text/javascript">
+var url="";
+  $(document).on('click', '#close-preview', function(){ 
+    $('.image-preview').popover('hide');
+    // Hover befor close the preview    
+});
+
+$(function() {
+    // Create the close button
+    var closebtn = $('<button/>', {
+        type:"button",
+        text: 'x',
+        id: 'close-preview',
+        style: 'font-size: initial;',
+    });
+    closebtn.attr("class","close pull-right");
+
+    // Clear event
+    $('.image-preview-clear').click(function(){
+        $('.image-preview').attr("data-content","").popover('hide');
+        $('.image-preview-filename').val("");
+        $('.image-preview-clear').hide();
+        $('.image-preview-input input:file').val("");
+        $(".image-preview-input-title").text("Browse"); 
+    }); 
+    // Create the preview image
+    $(".image-preview-input input:file").change(function (){     
+        var img = $('<img/>', {
+            id: 'dynamic',
+            width:250,
+            height:200
+        });      
+        var file = this.files[0];
+        var reader = new FileReader();
+        // Set preview image into the popover data-content
+        reader.onload = function (e) {
+            $(".image-preview-input-title").text("Change");
+            $(".image-preview-clear").show();
+            $(".image-preview-filename").val(file.name);
+        }        
+        reader.readAsDataURL(file);
+        url = file.name;
+    });  
+});
+</script>
+
+<script type="text/javascript">
 $("#bck").click(function() {
                 var type = "bck";
                 $.ajax({
@@ -332,6 +403,30 @@ $("#bck").click(function() {
                     }
                 });
             });
+
+$("#rstr").click(function() {
+                var type = "rstr";
+                $.ajax({
+                    type: "POST",
+                    url: 'bck.php',
+                    data: {optype: type, filename: url},
+                    cache: false,
+                    success: function(data)
+                    {
+                      $.notify({
+                          title: '<strong>Success!</strong>',
+                          message: 'Full Database restored.',
+                          animate: {
+                              enter: 'animated',
+                              exit: 'animated'
+                            }
+                        },{
+                          type: 'success'
+                        });
+                    }
+                });
+            });
+
 var tname = "";
 function initrunc(val){
   if("bill" === val){ tname = val}
@@ -364,6 +459,7 @@ function truncate(){
             };
 
 </script>
+
 
 </body>
 </html>

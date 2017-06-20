@@ -243,11 +243,12 @@ $ytt=$f_ytt["tt"];
                         $f_tssum = mysqli_fetch_assoc($row_tssum);
                         $tssum=$f_tssum["tssum"];
 
-                        $q_tserv = "SELECT SUM(amount) AS tserv from service_db.`servicetb` WHERE sdate='".$date."'";
+                        $q_tserv = "SELECT SUM(amount) AS tserv from servicedb.`servicetb` WHERE sdate='".$date."'";
                         $row_tserv = $conn->query($q_tserv);
                         $f_tserv = mysqli_fetch_assoc($row_tserv);
                         $tserv=$f_tserv["tserv"];
 
+                        if($yett === NULL){$yett = 0;}
                         echo "<tr><td></td><td style='text-transform: uppercase;'>CASH IN LEDGER</td><td>In Ledger</td><td style='font-weight: bold; text-align:right;'>".$yett."</td></tr>";
                         if($tssum === NULL){$tssum = 0;}
                         echo "<tr><td></td><td style='text-transform: uppercase;'>SALES</td><td>Income</td><td style='font-weight: bold; text-align:right;'>".$tssum."</td></tr>";
@@ -533,7 +534,7 @@ $(document).ready(function() {
                         $tssum=$f_tssum["tssum"];
                         if($tssum === NULL){$tssum = 0;}
 
-              $q_tserv = "SELECT SUM(amount) AS tserv from service_db.`servicetb` WHERE sdate='".$date."'";
+              $q_tserv = "SELECT SUM(amount) AS tserv from servicedb.`servicetb` WHERE sdate='".$date."'";
                         $row_tserv = $conn->query($q_tserv);
                         $f_tserv = mysqli_fetch_assoc($row_tserv);
                         $tserv=$f_tserv["tserv"];
