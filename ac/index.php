@@ -303,8 +303,8 @@ $ytt=$f_ytt["tt"];
                           </div>
                           <div class="radio">
                             <label>
-                              <input type="radio" name="Type" id="typeoption4" value="Purchase" disabled>
-                              Purchase
+                              <input type="radio" name="Type" id="typeoption4" value="Return">
+                              Return
                             </label>
                           </div>
                         </div>
@@ -470,6 +470,8 @@ function tablepopulate(){
       } else if(value == "In Ledger"){
           total += parseInt(td[i].innerText);
       } else if(value == "Out Cash"){
+          total -= parseInt(td[i].innerText);
+      } else if(value == "Return"){
           total -= parseInt(td[i].innerText);
       }
     }
