@@ -293,17 +293,23 @@ $ytt=$f_ytt["tt"];
                               Expenses
                             </label>
                           </div>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="Type" id="typeoption3" value="Investment">
+                              Investment
+                            </label>
+                          </div>
                           </div>
                           <div class="col-sm-5">
                           <div class="radio">
                             <label>
-                              <input type="radio" name="Type" id="typeoption3" value="Out Cash">
+                              <input type="radio" name="Type" id="typeoption4" value="Out Cash">
                               Out Cash
                             </label>
                           </div>
                           <div class="radio">
                             <label>
-                              <input type="radio" name="Type" id="typeoption4" value="Return">
+                              <input type="radio" name="Type" id="typeoption5" value="Return">
                               Return
                             </label>
                           </div>
@@ -437,6 +443,9 @@ $(document).ready(function(){
             else if (document.getElementById('typeoption4').checked) {
               type = document.getElementById('typeoption4').value;
             }
+            else if (document.getElementById('typeoption5').checked) {
+              type = document.getElementById('typeoption5').value;
+            }
             var amount = $("#amount").val();
 
             var markup = "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td style='text-transform: uppercase;'>" + name + "</td><td>" + type + "</td><td style='font-weight: bold; float: right;'>" + amount +"</td></tr>";
@@ -473,6 +482,8 @@ function tablepopulate(){
           total -= parseInt(td[i].innerText);
       } else if(value == "Return"){
           total -= parseInt(td[i].innerText);
+      } else if(value == "Investment"){
+          total += parseInt(td[i].innerText);
       }
     }
 

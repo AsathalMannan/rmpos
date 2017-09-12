@@ -288,8 +288,8 @@ $(document).ready( function () {
         },
       "columns": [
                 {"data": "pno"},
-                {"data": "pname"},
                 {"data": "category"},
+                {"data": "pname"},
                 {"data": "price"}
             ],
       keys: {

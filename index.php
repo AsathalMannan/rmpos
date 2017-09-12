@@ -173,8 +173,8 @@ header("Pragma: no-cache");
                 <tr>
                   <th>#</th>
                   <th>Product No.</th>
-                  <th>Product Name</th>
                   <th>Category</th>
+                  <th>Product Name</th>
                   <th>Price</th>
                 </tr>
                 </thead>
@@ -480,7 +480,7 @@ $( ".productName" ).on("select2:select", function(e) {
           var cate = $(this).select2('data')[0].category;
           var pric = $(this).select2('data')[0].price;
 
-                var markup = "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td>" + pno + "</td><td>" + pna + "</td><td>" + cate + "</td><td class='countable'>" + pric + "</td></tr>";
+                var markup = "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td>" + pno + "</td><td>" + cate + "</td><td>" + pna + "</td><td class='countable'>" + pric + "</td></tr>";
                 $("#cart-tb tbody").append(markup); 
                 $('.productName').empty();
                 $(".productName").select2("open");
