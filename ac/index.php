@@ -22,6 +22,9 @@ $conn = mysqli_connect("localhost", $username, $password, $database);
             $name=$f_user["name"];
             $role=$f_user["role"];
 
+} else{
+   $name= "User";
+   $role= "Staff";
 }
 
 $date = date("Y-m-d");
@@ -103,8 +106,8 @@ $ytt=$f_ytt["tt"];
                 <img src="../dist/img/myAvatar.png" class="img-circle" alt="User Image">
 
                 <p>
-                  <?php if( isset($_SESSION['user']) ) { echo $name;} else{echo "User";} ?>
-                  <small><?php if( isset($_SESSION['user']) ) { echo $role;} else{echo "Staff";} ?></small>
+                  <?php if( isset($_SESSION['user']) ) { echo $name;} else{echo $name;} ?>
+                  <small><?php if( isset($_SESSION['user']) ) { echo $role;} else{echo $role;} ?></small>
                 </p>
               </li>
               <!-- Menu Footer-->
@@ -295,22 +298,28 @@ $ytt=$f_ytt["tt"];
                           </div>
                           <div class="radio">
                             <label>
-                              <input type="radio" name="Type" id="typeoption3" value="Investment">
-                              Investment
+                              <input type="radio" name="Type" id="typeoption3" value="Return">
+                              Return
                             </label>
                           </div>
                           </div>
                           <div class="col-sm-5">
                           <div class="radio">
                             <label>
-                              <input type="radio" name="Type" id="typeoption4" value="Out Cash">
+                              <input type="radio" name="Type" id="typeoption4" value="Out Cash" <?php if (!($role == "Application Admin" || $role == "Shop Admin" || $role == "Owner")){ echo "disabled"; }?>>  
                               Out Cash
                             </label>
                           </div>
                           <div class="radio">
                             <label>
-                              <input type="radio" name="Type" id="typeoption5" value="Return">
-                              Return
+                              <input type="radio" name="Type" id="typeoption5" value="Investment" <?php if (!($role == "Application Admin" || $role == "Shop Admin" || $role == "Owner")){ echo "disabled"; }?>>
+                              Investment
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="Type" id="typeoption6" value="Purchase" <?php if (!($role == "Application Admin" || $role == "Shop Admin" || $role == "Owner")){ echo "disabled"; }?>>
+                              Purchase
                             </label>
                           </div>
                         </div>
@@ -331,7 +340,7 @@ $ytt=$f_ytt["tt"];
                     <!-- /.box-body -->
                     <div class="box-footer">
                       <div class="btn-group" role="group" aria-label="Basic example">
-                        <button id="add-entry" type="button" class="btn btn-success">Add</button>
+                        <button id="add-entry" type="button" class="btn btn-success clickable">Add</button>
                         <button type="reset" class="btn bg-blue">Reset</button>
                       </div>
                       <div class="btn-group pull-right" role="group" aria-label="Basic example">
@@ -446,6 +455,9 @@ $(document).ready(function(){
             else if (document.getElementById('typeoption5').checked) {
               type = document.getElementById('typeoption5').value;
             }
+            else if (document.getElementById('typeoption6').checked) {
+              type = document.getElementById('typeoption6').value;
+            }
             var amount = $("#amount").val();
 
             var markup = "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td style='text-transform: uppercase;'>" + name + "</td><td>" + type + "</td><td style='font-weight: bold; float: right;'>" + amount +"</td></tr>";
@@ -484,6 +496,8 @@ function tablepopulate(){
           total -= parseInt(td[i].innerText);
       } else if(value == "Investment"){
           total += parseInt(td[i].innerText);
+      } else if(value == "Purchase"){
+          total -= parseInt(td[i].innerText);
       }
     }
 
