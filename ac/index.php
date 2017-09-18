@@ -30,10 +30,7 @@ $conn = mysqli_connect("localhost", $username, $password, $database);
 $date = date("Y-m-d");
 $ydate = date("Y-m-d", strtotime("-1 day", strtotime($date)));
 
-$q_ytt = "SELECT tt from accounts.`ac` ORDER BY rdate DESC LIMIT 1";
-$row_ytt = $conn->query($q_ytt);
-$f_ytt = mysqli_fetch_assoc($row_ytt);
-$ytt=$f_ytt["tt"];
+
 
 ?>
 <!DOCTYPE html>
@@ -190,6 +187,7 @@ $ytt=$f_ytt["tt"];
                   <thead>
                     <tr>
                       <th>#</th>
+                      <th hidden>No.</th>
                       <th>Name</th>
                       <th>Type</th>
                       <th style="text-align:right;">Amount (₹)</th>
@@ -217,18 +215,19 @@ $ytt=$f_ytt["tt"];
                         $tinc=$f_tt["tinc"];
                         $texp=$f_tt["texp"];
 
-                        $q_today = "SELECT name,type,amount FROM accounts.`collection` WHERE rdate='".$date."'";
+                        $q_today = "SELECT no,name,type,amount FROM accounts.`collection` WHERE rdate='".$date."'";
                         $row_today = $conn->query($q_today);
                         while ($f_today = mysqli_fetch_assoc($row_today)){
+                          $today_no=$f_today["no"];
                           $today_name=$f_today["name"];
                           $today_type=$f_today["type"];
                           $today_amount=$f_today["amount"];
 
                           if($today_name == "CASH IN LEDGER" || $today_name == "SALES" || $today_name == "SERVICES"){
-                          echo "<tr><td></td><td style='text-transform: uppercase;'>".$today_name."</td><td>".$today_type."</td><td style='font-weight: bold; text-align:right;'>".$today_amount."</td></tr>";
+                          echo "<tr><td></td><td hidden>".$today_no."</td><td style='text-transform: uppercase;'>".$today_name."</td><td>".$today_type."</td><td style='font-weight: bold; text-align:right;'>".$today_amount."</td></tr>";
                           }
                           else{
-                          echo "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td style='text-transform: uppercase;'>".$today_name."</td><td>".$today_type."</td><td style='font-weight: bold; text-align:right;'>".$today_amount."</td></tr>";
+                          echo "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td hidden>".$today_no."</td><td style='text-transform: uppercase;'>".$today_name."</td><td>".$today_type."</td><td style='font-weight: bold; text-align:right;'>".$today_amount."</td></tr>";
                           }
                         }
                       }
@@ -252,11 +251,11 @@ $ytt=$f_ytt["tt"];
                         $tserv=$f_tserv["tserv"];
 
                         if($yett === NULL){$yett = 0;}
-                        echo "<tr><td></td><td style='text-transform: uppercase;'>CASH IN LEDGER</td><td>In Ledger</td><td style='font-weight: bold; text-align:right;'>".$yett."</td></tr>";
+                        echo "<tr><td></td><td hidden></td><td style='text-transform: uppercase;'>CASH IN LEDGER</td><td>In Ledger</td><td style='font-weight: bold; text-align:right;'>".$yett."</td></tr>";
                         if($tssum === NULL){$tssum = 0;}
-                        echo "<tr><td></td><td style='text-transform: uppercase;'>SALES</td><td>Income</td><td style='font-weight: bold; text-align:right;'>".$tssum."</td></tr>";
+                        echo "<tr><td></td><td hidden></td><td style='text-transform: uppercase;'>SALES</td><td>Income</td><td style='font-weight: bold; text-align:right;'>".$tssum."</td></tr>";
                         if($tserv === NULL){$tserv = 0;}
-                        echo "<tr><td></td><td style='text-transform: uppercase;'>SERVICES</td><td>Income</td><td style='font-weight: bold; text-align:right;'>".$tserv."</td></tr>";
+                        echo "<tr><td></td><td hidden></td><td style='text-transform: uppercase;'>SERVICES</td><td>Income</td><td style='font-weight: bold; text-align:right;'>".$tserv."</td></tr>";
                       }
               ?>
                     
@@ -340,7 +339,7 @@ $ytt=$f_ytt["tt"];
                     <!-- /.box-body -->
                     <div class="box-footer">
                       <div class="btn-group" role="group" aria-label="Basic example">
-                        <button id="add-entry" type="button" class="btn btn-success clickable">Add</button>
+                        <button id="add-entry" type="button" class="btn btn-success">Add</button>
                         <button type="reset" class="btn bg-blue">Reset</button>
                       </div>
                       <div class="btn-group pull-right" role="group" aria-label="Basic example">
@@ -361,7 +360,35 @@ $ytt=$f_ytt["tt"];
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
                     <h5 class="description-header">₹ <span>
-                    <?php if($ytt === NULL){ echo"0"; } else{ echo $ytt; } ?></span></h5>
+                    <?php
+                      $q_rdate = "SELECT rdate from accounts.`ac` ORDER BY rdate DESC LIMIT 1";
+                      $row_rdate = $conn->query($q_rdate);
+                      $f_rdate = mysqli_fetch_assoc($row_rdate);
+                      $rdate=$f_rdate["rdate"];
+
+                      if($rdate === NULL){ echo"0"; } 
+                      else{ 
+
+                        if($rdate == $date){
+                          $q_ytt = "SELECT tt from accounts.`ac` ORDER BY rdate DESC LIMIT 1, 1";
+                          $row_ytt = $conn->query($q_ytt);
+                          $f_ytt = mysqli_fetch_assoc($row_ytt);
+                          $ytt=$f_ytt["tt"];
+                          echo $ytt; 
+                        }
+
+                        else{
+                          $q_ytt = "SELECT tt from accounts.`ac` ORDER BY rdate DESC LIMIT 1";
+                          $row_ytt = $conn->query($q_ytt);
+                          $f_ytt = mysqli_fetch_assoc($row_ytt);
+                          $ytt=$f_ytt["tt"];
+                          echo $ytt; 
+                        }
+                      
+                    } 
+                      ?>
+                        
+                      </span></h5>
                     <span class="description-text">Cash in ledger</span>
                     <text class="description-text">- Previous</text>
                   </div>
@@ -460,7 +487,7 @@ $(document).ready(function(){
             }
             var amount = $("#amount").val();
 
-            var markup = "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td style='text-transform: uppercase;'>" + name + "</td><td>" + type + "</td><td style='font-weight: bold; float: right;'>" + amount +"</td></tr>";
+            var markup = "<tr><td><a id='delete-row' style='color: #000; cursor: pointer;'><i class='fa fa-minus-circle' aria-hidden='true'></i></a></td><td hidden></td><td style='text-transform: uppercase;'>" + name + "</td><td>" + type + "</td><td style='font-weight: bold; float: right;'>" + amount +"</td></tr>";
             $("#ac tbody").append(markup); 
         });
     });   
@@ -473,7 +500,7 @@ $(document).ready(function() { tablepopulate(); });
 
 function tablepopulate(){
     var td = document.querySelectorAll('#ac > tbody > tr > td:last-child');
-    var tt = document.querySelectorAll('#ac > tbody > tr > td:nth-child(3)');
+    var tt = document.querySelectorAll('#ac > tbody > tr > td:nth-child(4)');
     var typevalue = String(type);
     var total=0, inc=0, exp=0;
 
@@ -512,7 +539,6 @@ $('#ac').on('click', '#delete-row', function(){
     $(this).closest ('tr').remove ();
 });
 
-
 var arr0 = new Array();
 var arr1 = new Array();
 var arr2 = new Array();
@@ -523,9 +549,9 @@ var i=0;
 
         for (var r = 1, n = table.rows.length; r < n; r++) {
             // for (var c = 1, m = 1; c = m; c++) {
-            arr0[i] = table.rows[r].cells[1].innerHTML;
-            arr1[i] = table.rows[r].cells[2].innerHTML;
-            arr2[i] = table.rows[r].cells[3].innerHTML;
+            arr0[i] = table.rows[r].cells[2].innerHTML;
+            arr1[i] = table.rows[r].cells[3].innerHTML;
+            arr2[i] = table.rows[r].cells[4].innerHTML;
             i++;
             // }
         }
@@ -570,8 +596,8 @@ $(document).ready(function() {
               var tssum = <?php echo $tssum ?>;
               var tserv = <?php echo $tserv ?>;
               var ac = document.getElementById('ac');
-              ac.rows[2].cells[3].innerHTML = tssum;
-              ac.rows[3].cells[3].innerHTML = tserv;
+              ac.rows[2].cells[4].innerHTML = tssum;
+              ac.rows[3].cells[4].innerHTML = tserv;
             });
 <?php
 }

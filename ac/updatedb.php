@@ -21,6 +21,15 @@ if($qtype == "Update"){
 	$sql2 = "DELETE from collection WHERE rdate='".$date."'";
     $result2 = mysqli_query($conn, $sql2);
 
+    $q_no_order = "SELECT no from collection ORDER BY rdate DESC LIMIT 1";
+	$row_no_order = $conn->query($q_no_order);
+	$f_no_order = mysqli_fetch_assoc($row_no_order);
+	$no_order=$f_no_order["no"];
+	$no_order = $no_order + 1;
+
+	$q_alter_no_order = "ALTER TABLE collection AUTO_INCREMENT=".$no_order;
+	$row_alter_no_order = $conn->query($q_alter_no_order);
+
     for($i=0;$i<$arrlength;$i++){
 	$q_in_collection = "INSERT INTO `collection` (`rdate`, `name`, `type`, `amount`) VALUES ('".$date."', '".$arrayer0[$i]."', '".$arrayer1[$i]."', '".$arrayer2[$i]."')";
 	$row_collection = $conn->query($q_in_collection);
